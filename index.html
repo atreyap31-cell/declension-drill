@@ -1,0 +1,1081 @@
+<title>Declension Drill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Archivo:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F2F3F7; --surface:#FFFFFF; --surface-2:#E9EBF2; --sunk:#E4E7F0;
+  --ink:#171A23; --ink-2:#4A5063; --ink-3:#767D94;
+  --line:#D6D9E4; --line-2:#C2C7D8;
+  --accent:#4A55C7; --accent-ink:#FFFFFF; --accent-soft:#E4E6FA;
+  --ok:#0E7D5C; --ok-bg:#DDF2E9; --ok-line:#9BD8C1;
+  --bad:#B93726; --bad-bg:#FAE3DF; --bad-line:#EBAA9E;
+  --c1:#4A55C7; --c1-bg:#E4E6FA;
+  --c2:#0B6F79; --c2-bg:#D7EEF1;
+  --cn:#8A6100; --cn-bg:#F6EBCE;
+  --c3:#2C6B45; --c3-bg:#DBEEE1;
+  --shadow:0 1px 2px rgba(23,26,35,.06), 0 8px 24px -12px rgba(23,26,35,.18);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#101220; --surface:#191C2B; --surface-2:#212537; --sunk:#141724;
+  --ink:#E7E9F5; --ink-2:#A9AFC7; --ink-3:#8188A4;
+  --line:#2E3348; --line-2:#3C4259;
+  --accent:#8E97F5; --accent-ink:#11131F; --accent-soft:#242A4D;
+  --ok:#4FCB9E; --ok-bg:#12332A; --ok-line:#1F5E4A;
+  --bad:#F2846F; --bad-bg:#3A1F1B; --bad-line:#6B3227;
+  --c1:#8E97F5; --c1-bg:#242A4D;
+  --c2:#4FC3CE; --c2-bg:#123038;
+  --cn:#E0B356; --cn-bg:#372C12;
+  --c3:#5FC189; --c3-bg:#15321F;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  --paper:#101220; --surface:#191C2B; --surface-2:#212537; --sunk:#141724;
+  --ink:#E7E9F5; --ink-2:#A9AFC7; --ink-3:#8188A4;
+  --line:#2E3348; --line-2:#3C4259;
+  --accent:#8E97F5; --accent-ink:#11131F; --accent-soft:#242A4D;
+  --ok:#4FCB9E; --ok-bg:#12332A; --ok-line:#1F5E4A;
+  --bad:#F2846F; --bad-bg:#3A1F1B; --bad-line:#6B3227;
+  --c1:#8E97F5; --c1-bg:#242A4D;
+  --c2:#4FC3CE; --c2-bg:#123038;
+  --cn:#E0B356; --cn-bg:#372C12;
+  --c3:#5FC189; --c3-bg:#15321F;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:Archivo, "Segoe UI", system-ui, sans-serif;
+  font-size:15px; line-height:1.55; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px; margin:0 auto; padding-inline:18px; padding-block:0 64px}
+h1,h2,h3{font-family:Spectral, Georgia, serif; text-wrap:balance; margin:0}
+a{color:var(--accent)}
+.lat{font-family:Spectral, Georgia, serif}
+
+header.top{border-bottom:1px solid var(--line); background:var(--surface)}
+.top-in{max-width:1080px; margin:0 auto; padding:16px 18px 0;
+  display:flex; flex-wrap:wrap; gap:14px 20px; align-items:flex-end; justify-content:space-between}
+.brand h1{font-size:26px; font-weight:700; letter-spacing:-.015em; line-height:1.1}
+.brand p{margin:2px 0 0; color:var(--ink-3); font-size:12px; letter-spacing:.09em; text-transform:uppercase}
+.scorebar{display:flex; gap:18px; align-items:baseline; font-variant-numeric:tabular-nums}
+.sc{display:flex; flex-direction:column; align-items:flex-start}
+.sc b{font-size:19px; font-weight:600; line-height:1.1}
+.sc span{font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+nav.tabs{max-width:1080px; margin:0 auto; padding:14px 18px 0; display:flex; gap:2px; overflow-x:auto}
+nav.tabs button{
+  appearance:none; border:0; background:none; color:var(--ink-2); cursor:pointer;
+  font:inherit; font-size:13.5px; font-weight:600; letter-spacing:.02em;
+  padding:9px 14px; border-radius:7px 7px 0 0; border-bottom:2px solid transparent; white-space:nowrap;
+}
+nav.tabs button:hover{color:var(--ink); background:var(--surface-2)}
+nav.tabs button[aria-selected="true"]{color:var(--accent); border-bottom-color:var(--accent)}
+nav.tabs button:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+
+section.view{padding-block:26px; display:none; flex-direction:column; gap:26px}
+section.view.on{display:flex}
+.eyebrow{font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); font-weight:600}
+.lede{font-size:16.5px; color:var(--ink-2); max-width:62ch; line-height:1.6}
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:20px 22px}
+.panel h2{font-size:20px; font-weight:600; letter-spacing:-.01em}
+.panel h3{font-size:15px; font-weight:600; font-family:Archivo, sans-serif; letter-spacing:.01em}
+.stack{display:flex; flex-direction:column; gap:14px}
+.stack-sm{display:flex; flex-direction:column; gap:8px}
+.grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px}
+p{margin:0}
+.muted{color:var(--ink-2)}
+.tiny{font-size:12.5px; color:var(--ink-3)}
+.btn{
+  appearance:none; font:inherit; font-weight:600; font-size:13.5px; cursor:pointer;
+  background:var(--surface); color:var(--ink); border:1px solid var(--line-2);
+  border-radius:8px; padding:8px 14px;
+}
+.btn:hover{background:var(--surface-2)}
+.btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:none; border-color:transparent; color:var(--ink-2)}
+.btn.ghost:hover{background:var(--surface-2); color:var(--ink)}
+.row{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+.spread{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between}
+
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:600;
+  letter-spacing:.05em; text-transform:uppercase; padding:3px 9px; border-radius:99px;
+  border:1px solid transparent; white-space:nowrap}
+.chip.c1{background:var(--c1-bg); color:var(--c1); border-color:color-mix(in srgb,var(--c1) 30%, transparent)}
+.chip.c2{background:var(--c2-bg); color:var(--c2); border-color:color-mix(in srgb,var(--c2) 30%, transparent)}
+.chip.cn{background:var(--cn-bg); color:var(--cn); border-color:color-mix(in srgb,var(--cn) 30%, transparent)}
+.chip.c3{background:var(--c3-bg); color:var(--c3); border-color:color-mix(in srgb,var(--c3) 30%, transparent)}
+
+ol.rules{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0}
+ol.rules li{display:grid; grid-template-columns:30px 1fr; gap:14px; padding:14px 0; border-top:1px solid var(--line)}
+ol.rules li:first-child{border-top:0; padding-top:0}
+ol.rules .num{font-family:Spectral,serif; font-size:19px; font-weight:600; color:var(--accent); line-height:1.3;
+  font-variant-numeric:tabular-nums}
+ol.rules b{font-weight:600}
+ol.rules .why{color:var(--ink-2); font-size:14px; margin-top:3px}
+
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:14px}
+caption{text-align:left; padding:13px 16px 11px; font-family:Spectral,serif; font-size:17px; font-weight:600;
+  border-bottom:1px solid var(--line); background:var(--surface-2)}
+th,td{padding:7px 12px; text-align:left; border-top:1px solid var(--line)}
+th.case{font-weight:600; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3);
+  width:74px; white-space:nowrap}
+th.numlab{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3);
+  width:64px; vertical-align:middle; font-weight:600}
+td.end{font-family:Spectral,serif; font-size:17px; font-weight:600; white-space:nowrap}
+td.end .alt{font-family:Archivo,sans-serif; font-size:12px; font-weight:500; color:var(--ink-3); margin-left:5px}
+tr.numstart td, tr.numstart th{border-top:2px solid var(--line-2)}
+.col-c1{background:var(--c1-bg)} .col-c1 .endv{color:var(--c1)}
+.col-c2{background:var(--c2-bg)} .col-c2 .endv{color:var(--c2)}
+.col-cn{background:var(--cn-bg)} .col-cn .endv{color:var(--cn)}
+.col-c3{background:var(--c3-bg)} .col-c3 .endv{color:var(--c3)}
+.hide-ends td.end .endv, .hide-ends td.end .alt{opacity:0; transition:opacity .12s}
+.hide-ends td.end:hover .endv, .hide-ends td.end:hover .alt,
+.hide-ends td.end:focus .endv, .hide-ends td.end:focus .alt{opacity:1}
+.cards3{display:grid; grid-template-columns:repeat(auto-fit,minmax(272px,1fr)); gap:16px; align-items:start}
+
+.stage{background:var(--surface); border:1px solid var(--line); border-radius:14px;
+  box-shadow:var(--shadow); padding:26px 24px; display:flex; flex-direction:column; gap:18px}
+.prompt{display:flex; flex-direction:column; gap:10px; align-items:center; text-align:center}
+.prompt .ask{font-family:Spectral,serif; font-size:clamp(24px,5vw,34px); font-weight:600; letter-spacing:-.01em; line-height:1.2}
+.prompt .sub{font-size:13px; color:var(--ink-3); letter-spacing:.03em}
+.answer{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+input[type="text"]{
+  font-family:Spectral,serif; font-size:22px; font-weight:600; text-align:center;
+  background:var(--sunk); color:var(--ink); border:1.5px solid var(--line-2); border-radius:9px;
+  padding:8px 12px; width:min(240px,100%);
+}
+input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+.verdict{border-radius:10px; padding:12px 16px; display:flex; gap:12px; align-items:flex-start;
+  border:1px solid transparent; font-size:14.5px}
+.verdict .mark{font-family:Spectral,serif; font-size:20px; font-weight:700; line-height:1.2}
+.verdict.ok{background:var(--ok-bg); border-color:var(--ok-line); color:var(--ok)}
+.verdict.bad{background:var(--bad-bg); border-color:var(--bad-line); color:var(--bad)}
+.verdict b{font-family:Spectral,serif; font-size:18px}
+.verdict .note{display:block; color:var(--ink-2); font-size:13.5px; margin-top:3px}
+.opts{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:9px}
+.opt{appearance:none; font:inherit; font-size:14px; font-weight:600; cursor:pointer; text-align:left;
+  background:var(--surface); border:1.5px solid var(--line-2); border-radius:9px; padding:11px 14px; color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--accent); background:var(--accent-soft)}
+.opt:disabled{cursor:default}
+.opt.is-ok{background:var(--ok-bg); border-color:var(--ok); color:var(--ok)}
+.opt.is-bad{background:var(--bad-bg); border-color:var(--bad); color:var(--bad)}
+.filters{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.toggle{display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:500;
+  background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:6px 11px; cursor:pointer; color:var(--ink-2)}
+.toggle input{accent-color:var(--accent); margin:0; width:14px; height:14px}
+.toggle:has(input:checked){border-color:var(--accent); color:var(--ink); background:var(--accent-soft)}
+.streakdots{display:flex; gap:4px; align-items:center; min-height:10px}
+.streakdots i{width:8px; height:8px; border-radius:99px; background:var(--line-2); display:block}
+.streakdots i.hit{background:var(--ok)}
+.streakdots i.miss{background:var(--bad)}
+
+.declgrid td{border-top:1px solid var(--line)}
+.declgrid input[type="text"]{font-size:16px; width:100%; min-width:110px; text-align:left; padding:6px 10px}
+.declgrid input.ok{border-color:var(--ok); background:var(--ok-bg); color:var(--ok)}
+.declgrid input.bad{border-color:var(--bad); background:var(--bad-bg); color:var(--bad)}
+.declgrid input.given{background:transparent; border-style:dashed; color:var(--ink-3)}
+.solution{font-family:Spectral,serif; font-size:15px; font-weight:600; white-space:nowrap}
+
+.endgrid{display:flex; flex-wrap:wrap; gap:7px}
+.endbtn{appearance:none; font-family:Spectral,serif; font-size:18px; font-weight:600; cursor:pointer;
+  background:var(--surface); border:1.5px solid var(--line-2); color:var(--ink);
+  border-radius:8px; padding:5px 13px; min-width:56px}
+.endbtn:hover{border-color:var(--accent); color:var(--accent)}
+.endbtn[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.parselist{display:flex; flex-direction:column; gap:0}
+.parse{display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:center;
+  padding:10px 0; border-top:1px solid var(--line)}
+.parse:first-child{border-top:0}
+.parse .what{font-size:14.5px; font-weight:600}
+.parse .what em{font-style:normal; font-weight:400; color:var(--ink-2)}
+.bigend{font-family:Spectral,serif; font-size:52px; font-weight:700; line-height:1; letter-spacing:-.01em}
+.countline{font-size:13px; color:var(--ink-2); max-width:46ch}
+.hidden{display:none !important}
+
+/* neuter module */
+.seg{display:inline-flex; background:var(--surface-2); border:1px solid var(--line);
+  border-radius:9px; padding:3px; gap:3px; flex-wrap:wrap}
+.seg button{appearance:none; font:inherit; font-size:13px; font-weight:600; cursor:pointer; border:0;
+  background:none; color:var(--ink-2); padding:7px 14px; border-radius:6px; white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-selected="true"]{background:var(--surface); color:var(--ink);
+  box-shadow:0 1px 2px rgba(0,0,0,.09)}
+.seg button:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+.sent{font-family:Spectral,serif; font-size:clamp(19px,4vw,27px); font-weight:400; line-height:1.45;
+  text-align:center; max-width:24ch; margin:0 auto}
+.sent b{font-weight:700; color:var(--cn); box-shadow:inset 0 -2px 0 var(--cn)}
+.gloss{font-family:Archivo,sans-serif; font-size:13.5px; color:var(--ink-3); font-style:italic}
+.famtable td:first-child{font-family:Spectral,serif; font-size:16px; font-weight:600; white-space:nowrap}
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+@media (max-width:560px){
+  .top-in{align-items:flex-start}
+  .scorebar{gap:14px}
+  .panel{padding:16px 15px}
+  .stage{padding:20px 15px}
+}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">
+      <h1>Declension Drill</h1>
+      <p>Cāsūs &middot; Nōminātīvus ad Vocātīvum</p>
+    </div>
+    <div class="scorebar">
+      <div class="sc"><b id="s-right">0</b><span>Right</span></div>
+      <div class="sc"><b id="s-total">0</b><span>Asked</span></div>
+      <div class="sc"><b id="s-pct">&mdash;</b><span>Accuracy</span></div>
+      <div class="sc"><b id="s-streak">0</b><span>Streak</span></div>
+    </div>
+  </div>
+  <nav class="tabs" role="tablist" id="tabs">
+    <button role="tab" data-view="guide" aria-selected="true">Identify</button>
+    <button role="tab" data-view="charts" aria-selected="false">Charts</button>
+    <button role="tab" data-view="neut" aria-selected="false">Neuters</button>
+    <button role="tab" data-view="drill" aria-selected="false">Ending Drill</button>
+    <button role="tab" data-view="decline" aria-selected="false">Decline a Noun</button>
+    <button role="tab" data-view="decode" aria-selected="false">Decoder</button>
+  </nav>
+</header>
+
+<div class="wrap">
+
+<!-- ============ GUIDE ============ -->
+<section class="view on" id="v-guide">
+  <div class="stack">
+    <p class="eyebrow">Step one</p>
+    <h2 style="font-size:28px;font-weight:700;letter-spacing:-.02em">The nominative lies. The genitive never does.</h2>
+    <p class="lede">You cannot tell a noun's declension from the form you meet in a sentence, or even from its
+      dictionary headword. You tell it from the <b>genitive singular</b> &mdash; which is exactly why every
+      dictionary entry hands you two forms instead of one.</p>
+  </div>
+
+  <div class="panel">
+    <div class="tablewrap" style="border:0">
+      <table>
+        <caption>The genitive test</caption>
+        <thead><tr><th class="case">Gen. sg.</th><th class="case">Decl.</th><th class="case" style="width:auto">Dictionary entry</th><th class="case">Stem</th></tr></thead>
+        <tbody>
+          <tr><td class="end col-c1"><span class="endv">-ae</span></td><td>1st</td><td class="lat">puella, puell<b>ae</b>, f.</td><td class="lat">puell-</td></tr>
+          <tr><td class="end col-c2"><span class="endv">-ī</span></td><td>2nd</td><td class="lat">servus, serv<b>ī</b>, m. &middot; bellum, bell<b>ī</b>, n.</td><td class="lat">serv- / bell-</td></tr>
+          <tr><td class="end col-c3"><span class="endv">-is</span></td><td>3rd</td><td class="lat">rēx, rēg<b>is</b>, m.</td><td class="lat">rēg-</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tiny" style="margin-top:12px">Three endings, three declensions, no overlap. Whatever the headword looks
+      like, the genitive settles it.</p>
+  </div>
+
+  <div class="panel stack">
+    <h2>Four rules that cut the memorising in half</h2>
+    <ol class="rules">
+      <li><span class="num">1</span><div>
+        <b>Build every form on the genitive stem, not the nominative.</b>
+        <div class="why"><span class="lat">rēx, rēgis</span> &rarr; drop <span class="lat">-is</span> &rarr; stem <span class="lat">rēg-</span>. Every remaining form is <span class="lat">rēg-</span> plus an ending: <span class="lat">rēgem, rēgī, rēgēs, rēgibus</span>. The nominative <span class="lat">rēx</span> is a one-off collision (<span class="lat">rēg + s &rarr; x</span>) &mdash; that is the whole reason the 3rd declension feels chaotic, and the only thing your chart's &ldquo;modified stem&rdquo; note means.</div>
+      </div></li>
+      <li><span class="num">2</span><div>
+        <b>The Neuter Law &mdash; no exceptions anywhere in Latin.</b>
+        <div class="why">Nom. = Acc. = Voc., in <em>both</em> numbers. And all three plurals always end in <b class="lat">-a</b>. So a neuter noun has only <b>five distinct forms</b> to learn, not twelve: <span class="lat">bellum, bellum, bellum &middot; bella, bella, bella</span>.</div>
+      </div></li>
+      <li><span class="num">3</span><div>
+        <b>Dative plural = Ablative plural. Always.</b>
+        <div class="why">1st and 2nd: <b class="lat">-īs</b>. 3rd: <b class="lat">-ibus</b>. Four free cells in every paradigm.</div>
+      </div></li>
+      <li><span class="num">4</span><div>
+        <b>The ablative singular is the long-vowel case.</b>
+        <div class="why">1st <b class="lat">-ā</b>, 2nd <b class="lat">-ō</b>, 3rd <b class="lat">-e</b> (or <b class="lat">-ī</b> in i-stems). In the 1st declension the macron on <span class="lat">-ā</span> is the <em>only</em> thing separating ablative singular from nominative singular. Write your macrons.</div>
+      </div></li>
+    </ol>
+  </div>
+
+  <div class="grid2">
+    <div class="panel stack-sm">
+      <h3>Gender defaults &mdash; and the traps</h3>
+      <p class="muted" style="font-size:14px"><span class="chip c1">1st</span> Feminine &mdash; <em>except</em> words for traditionally male roles, which are masculine but decline exactly the same: <span class="lat">agricola</span> (farmer), <span class="lat">nauta</span> (sailor), <span class="lat">poēta</span> (poet), <span class="lat">pīrāta</span> (pirate), <span class="lat">incola</span> (inhabitant). Their adjectives go masculine; their endings do not change.</p>
+      <p class="muted" style="font-size:14px"><span class="chip c2">2nd</span> <span class="lat">-us</span> and <span class="lat">-er</span> &rarr; masculine; <span class="lat">-um</span> &rarr; neuter. Reliable. Watch the <span class="lat">-er</span> nouns: some keep the <em>e</em> (<span class="lat">puer, puerī</span>) and some drop it (<span class="lat">ager, agrī</span>). Only the genitive tells you which.</p>
+      <p class="muted" style="font-size:14px"><span class="chip c3">3rd</span> Anything. Gender has to be memorised with the word &mdash; that is why the entry bothers to print <span class="lat">m.</span>, <span class="lat">f.</span>, or <span class="lat">n.</span></p>
+    </div>
+    <div class="panel stack-sm">
+      <h3>Spotting a 3rd-declension i-stem</h3>
+      <p class="muted" style="font-size:14px">The parenthesised endings on your chart are the i-stem forms. The reliable giveaway is <b class="lat">-ium</b> in the genitive plural.</p>
+      <p class="muted" style="font-size:14px"><b>M./F. i-stems</b> &mdash; either the nominative and genitive singular have the same number of syllables (<span class="lat">cīvis, cīvis</span>), or the stem ends in two consonants (<span class="lat">urbs, urbis</span> &rarr; <span class="lat">urbium</span>). They take gen. pl. <b class="lat">-ium</b>, and may take acc. pl. <b class="lat">-īs</b>.</p>
+      <p class="muted" style="font-size:14px"><b>Neuter i-stems</b> &mdash; nominative singular ends in <span class="lat">-e</span>, <span class="lat">-al</span>, or <span class="lat">-ar</span> (<span class="lat">mare, animal, exemplar</span>). These take the whole set: abl. sg. <b class="lat">-ī</b>, nom./acc./voc. pl. <b class="lat">-ia</b>, gen. pl. <b class="lat">-ium</b>.</p>
+    </div>
+  </div>
+
+  <div class="panel stack">
+    <div class="spread">
+      <h2>Quick-fire: name the declension</h2>
+      <span class="tiny" id="dq-tally">0 / 0</span>
+    </div>
+    <p class="tiny">Read the genitive, not the headword.</p>
+    <div class="prompt" style="align-items:flex-start;text-align:left;gap:4px">
+      <div class="ask lat" id="dq-entry" style="font-size:clamp(22px,4.5vw,30px)"></div>
+      <div class="sub" id="dq-gloss"></div>
+    </div>
+    <div class="opts" id="dq-opts"></div>
+    <div class="verdict hidden" id="dq-verdict"></div>
+    <div class="row"><button class="btn primary" id="dq-next">Next entry</button></div>
+  </div>
+</section>
+
+<!-- ============ CHARTS ============ -->
+<section class="view" id="v-charts">
+  <div class="spread">
+    <div class="stack-sm">
+      <p class="eyebrow">Reference</p>
+      <h2 style="font-size:24px;font-weight:700">Case endings, 1st &ndash; 3rd</h2>
+    </div>
+    <label class="toggle"><input type="checkbox" id="hide-ends"> Cover endings (hover a cell to peek)</label>
+  </div>
+  <div class="cards3" id="chart-host"></div>
+  <div class="panel stack">
+    <h2>Read the shortcuts off the chart</h2>
+    <div class="grid2">
+      <div class="stack-sm">
+        <p style="font-size:14px"><span class="chip c1">1st</span> Twelve slots, <b>six</b> distinct forms. <span class="lat">-ae</span> alone fills four of them (gen. sg., dat. sg., nom. pl., voc. pl.); <span class="lat">-a</span> covers nom. and voc. sg.; <span class="lat">-īs</span> covers dat. and abl. pl. Learn six things, get twelve.</p>
+        <p style="font-size:14px"><span class="chip c2">2nd M.</span> The one place in the whole chart where the vocative differs from the nominative: <span class="lat">-us</span> becomes <span class="lat">-e</span>. <span class="lat">Et tū, Brūte</span> &mdash; never <span class="lat">Brūtus</span>.</p>
+      </div>
+      <div class="stack-sm">
+        <p style="font-size:14px"><span class="chip cn">Neuter</span> Both neuter columns obey the Neuter Law, so rows 1, 4 and 6 of each block are identical. Learn <span class="lat">-um / -ī / -ō</span> and <span class="lat">-a / -ōrum / -īs</span> and the entire 2nd-neuter paradigm is done.</p>
+        <p style="font-size:14px"><span class="chip c3">3rd</span> <span class="lat">-ibus</span> handles dat. and abl. plural for <em>both</em> genders, and <span class="lat">-ēs</span> handles nom., acc. and voc. plural for M./F. Six of the twelve M./F. cells are just two endings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEUTERS ============ -->
+<section class="view" id="v-neut">
+  <div class="stack-sm">
+    <p class="eyebrow">Special topic</p>
+    <h2 style="font-size:24px;font-weight:700">Neuters</h2>
+    <p class="lede">Neuters are <em>less</em> to memorise than anything else on the chart &mdash; five distinct
+      forms instead of twelve. What makes them hard is two separate things: the endings stop telling you the case,
+      and the 3rd-declension nominatives can't be guessed from the stem. Each drill below attacks one of them.</p>
+  </div>
+
+  <div class="seg" id="nt-modes" role="tablist">
+    <button role="tab" data-m="stem" aria-selected="true">Stem recall</button>
+    <button role="tab" data-m="role" aria-selected="false">Subject or object?</button>
+    <button role="tab" data-m="trap" aria-selected="false">The &minus;us trap</button>
+  </div>
+  <p class="tiny" id="nt-blurb"></p>
+
+  <div class="stage">
+    <div class="prompt">
+      <div class="sub" id="nt-tag"></div>
+      <div id="nt-body"></div>
+    </div>
+    <form class="answer hidden" id="nt-form" autocomplete="off">
+      <input type="text" id="nt-input" placeholder="corporis" aria-label="Your answer" spellcheck="false">
+      <button class="btn primary" type="submit" id="nt-submit">Check</button>
+      <button class="btn ghost" type="button" id="nt-skip">Show me</button>
+    </form>
+    <div class="opts hidden" id="nt-opts"></div>
+    <div class="verdict hidden" id="nt-verdict"></div>
+    <div class="row hidden" id="nt-nextrow"><button class="btn primary" id="nt-next">Next</button></div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel stack-sm">
+      <h3>The two families that cover most 3rd-declension neuters</h3>
+      <div class="tablewrap" style="border:0">
+        <table class="famtable">
+          <thead><tr><th class="case">Nom. sg.</th><th class="case">Stem</th><th class="case" style="width:auto">Examples</th></tr></thead>
+          <tbody>
+            <tr><td class="col-cn">-us</td><td class="lat">-or- / -er-</td><td class="lat">corpus &rarr; corpor- &middot; tempus &rarr; tempor- &middot; opus &rarr; oper- &middot; genus &rarr; gener- &middot; vulnus &rarr; vulner-</td></tr>
+            <tr><td class="col-cn">-men</td><td class="lat">-min-</td><td class="lat">nōmen &rarr; nōmin- &middot; flūmen &rarr; flūmin- &middot; carmen &rarr; carmin- &middot; lūmen &rarr; lūmin-</td></tr>
+            <tr><td class="col-cn">-e, -al, -ar</td><td class="lat">i-stem</td><td class="lat">mare &rarr; mar- &middot; animal &rarr; animāl- &middot; exemplar &rarr; exemplār-</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tiny">The <span class="lat">-men</span> family is perfectly regular: learn one, you have them all.
+        The <span class="lat">-us</span> family has to be learned word by word &mdash; but knowing it <em>is</em> a
+        family is most of the battle, because it stops you filing <span class="lat">corpus</span> with
+        <span class="lat">servus</span>.</p>
+    </div>
+    <div class="panel stack-sm">
+      <h3>When the ending won't tell you the case</h3>
+      <p class="muted" style="font-size:14px">The Neuter Law makes Nom. = Acc. = Voc., so for a neuter you resolve
+        the case from the sentence instead. Work down this list and stop at the first one that answers:</p>
+      <ol class="rules" style="margin-top:2px">
+        <li><span class="num">1</span><div><b>Is the subject slot already taken?</b>
+          <div class="why">Another nominative in the sentence means your neuter is the object.</div></div></li>
+        <li><span class="num">2</span><div><b>What number is the verb?</b>
+          <div class="why">A plural verb with no other candidate makes a neuter plural the subject. A linking verb
+            (<span class="lat">est</span>, <span class="lat">sunt</span>) plus a neuter adjective is the giveaway.</div></div></li>
+        <li><span class="num">3</span><div><b>Word order, as a tiebreaker.</b>
+          <div class="why">Latin's default is subject first, object immediately before the verb. Not a law, but right more often than not.</div></div></li>
+      </ol>
+      <p class="tiny">And the collision to watch: neuter plural <b class="lat">-a</b> looks exactly like
+        1st-declension singular <b class="lat">-a</b>. <span class="lat">bella</span> (wars) versus
+        <span class="lat">puella</span> (girl). Both short &mdash; macrons will not save you. Only knowing the
+        noun's gender will.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DRILL ============ -->
+<section class="view" id="v-drill">
+  <div class="spread">
+    <div class="stack-sm">
+      <p class="eyebrow">Recall</p>
+      <h2 style="font-size:24px;font-weight:700">Ending drill</h2>
+    </div>
+    <div class="streakdots" id="drill-dots" aria-label="recent answers"></div>
+  </div>
+  <div class="filters" id="drill-filters">
+    <label class="toggle"><input type="checkbox" data-p="d1" checked> 1st</label>
+    <label class="toggle"><input type="checkbox" data-p="d2m" checked> 2nd M.</label>
+    <label class="toggle"><input type="checkbox" data-p="d2n" checked> 2nd N.</label>
+    <label class="toggle"><input type="checkbox" data-p="d3mf" checked> 3rd M./F.</label>
+    <label class="toggle"><input type="checkbox" data-p="d3n" checked> 3rd N.</label>
+    <span style="flex:1"></span>
+    <label class="toggle"><input type="checkbox" id="strict"> Require macrons</label>
+  </div>
+  <div class="stage">
+    <div class="prompt">
+      <div class="sub" id="dr-decl"></div>
+      <div class="ask" id="dr-ask"></div>
+      <div class="sub">Type the ending &mdash; the hyphen is optional</div>
+    </div>
+    <form class="answer" id="dr-form" autocomplete="off">
+      <input type="text" id="dr-input" placeholder="-am" aria-label="Your answer" spellcheck="false">
+      <button class="btn primary" type="submit" id="dr-submit">Check</button>
+      <button class="btn ghost" type="button" id="dr-skip">Show me</button>
+    </form>
+    <div class="verdict hidden" id="dr-verdict"></div>
+    <div class="row">
+      <span class="tiny">Macron keys</span>
+      <button class="btn" type="button" data-ins="&#257;" style="font-family:Spectral,serif;padding:4px 11px">&#257;</button>
+      <button class="btn" type="button" data-ins="&#275;" style="font-family:Spectral,serif;padding:4px 11px">&#275;</button>
+      <button class="btn" type="button" data-ins="&#299;" style="font-family:Spectral,serif;padding:4px 11px">&#299;</button>
+      <button class="btn" type="button" data-ins="&#333;" style="font-family:Spectral,serif;padding:4px 11px">&#333;</button>
+      <button class="btn" type="button" data-ins="&#363;" style="font-family:Spectral,serif;padding:4px 11px">&#363;</button>
+    </div>
+  </div>
+  <div class="panel stack-sm">
+    <h3>Cells you keep missing</h3>
+    <p class="tiny" id="misslist">Nothing yet. Keep going.</p>
+  </div>
+</section>
+
+<!-- ============ DECLINE ============ -->
+<section class="view" id="v-decline">
+  <div class="spread">
+    <div class="stack-sm">
+      <p class="eyebrow">Production</p>
+      <h2 style="font-size:24px;font-weight:700">Decline a noun</h2>
+    </div>
+    <div class="row">
+      <button class="btn" id="dc-new">New noun</button>
+      <button class="btn primary" id="dc-check">Check all</button>
+    </div>
+  </div>
+  <p class="lede">Endings in isolation are the easy half; producing a real word under pressure is what the exam
+    actually asks. Nominative singular is given, because in the 3rd declension it is the one form you cannot derive
+    from the stem.</p>
+  <div class="panel stack">
+    <div class="spread">
+      <div class="stack-sm">
+        <div class="lat" id="dc-entry" style="font-size:26px;font-weight:600"></div>
+        <div class="tiny" id="dc-meta"></div>
+      </div>
+      <div class="row">
+        <label class="toggle"><input type="checkbox" id="dc-endings"> Endings only</label>
+        <span class="tiny" id="dc-score"></span>
+      </div>
+    </div>
+    <div class="tablewrap" style="border:0">
+      <table class="declgrid" id="dc-grid"></table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DECODER ============ -->
+<section class="view" id="v-decode">
+  <div class="stack-sm">
+    <p class="eyebrow">Parsing</p>
+    <h2 style="font-size:24px;font-weight:700">Ending decoder</h2>
+    <p class="lede">Translating is the reverse problem: you have an ending in front of you and need every case it
+      could possibly be. Pick one and try to name all its jobs <em>before</em> you reveal.</p>
+  </div>
+  <div class="panel stack">
+    <div class="endgrid" id="dec-buttons"></div>
+    <div class="spread" style="border-top:1px solid var(--line);padding-top:16px">
+      <div class="stack-sm">
+        <div class="bigend lat" id="dec-big">-ae</div>
+        <div class="countline" id="dec-count"></div>
+      </div>
+      <button class="btn primary" id="dec-reveal">Reveal</button>
+    </div>
+    <div class="parselist" id="dec-list"></div>
+  </div>
+  <div class="panel stack-sm">
+    <h3>The three that cause the most wrong translations</h3>
+    <p style="font-size:14px"><b class="lat">-a</b> vs <b class="lat">-ā</b> &mdash; short <span class="lat">-a</span> is 1st nom./voc. sg., <em>or</em> any neuter nom./acc./voc. plural. Long <span class="lat">-ā</span> is 1st abl. sg. and nothing else. If your text prints macrons this is free; if it doesn't, let the verb and any preposition decide.</p>
+    <p style="font-size:14px"><b class="lat">-is</b> vs <b class="lat">-īs</b> &mdash; short <span class="lat">-is</span> is 3rd gen. <em>singular</em> ("of the &hellip;"). Long <span class="lat">-īs</span> is 1st/2nd dat. or abl. <em>plural</em>. Opposite number, opposite job, one macron apart.</p>
+    <p style="font-size:14px"><b class="lat">-um</b> &mdash; 2nd acc. sg. masculine, or 2nd neuter nom./acc./voc. sg., or 3rd gen. plural. If the sentence already has a direct object, suspect the genitive plural.</p>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+var CASES=["nom","gen","dat","acc","abl","voc"];
+var CL={nom:"Nom.",gen:"Gen.",dat:"Dat.",acc:"Acc.",abl:"Abl.",voc:"Voc."};
+var CFULL={nom:"Nominative",gen:"Genitive",dat:"Dative",acc:"Accusative",abl:"Ablative",voc:"Vocative"};
+var NUMF={sg:"Singular",pl:"Plural"};
+
+var P={
+ d1:{name:"1st Declension",short:"1st",gen:"F.",col:"c1",
+  sg:{nom:{e:"-a"},gen:{e:"-ae"},dat:{e:"-ae"},acc:{e:"-am"},abl:{e:"-ā"},voc:{e:"-a"}},
+  pl:{nom:{e:"-ae"},gen:{e:"-ārum"},dat:{e:"-īs"},acc:{e:"-ās"},abl:{e:"-īs"},voc:{e:"-ae"}}},
+ d2m:{name:"2nd Declension",short:"2nd",gen:"M.",col:"c2",
+  sg:{nom:{e:"-us",note:"(none)",alt:["none","-r","-er"]},gen:{e:"-ī"},dat:{e:"-ō"},acc:{e:"-um"},abl:{e:"-ō"},voc:{e:"-e"}},
+  pl:{nom:{e:"-ī"},gen:{e:"-ōrum"},dat:{e:"-īs"},acc:{e:"-ōs"},abl:{e:"-īs"},voc:{e:"-ī"}}},
+ d2n:{name:"2nd Declension",short:"2nd",gen:"N.",col:"cn",
+  sg:{nom:{e:"-um",note:"(none)",alt:["none"]},gen:{e:"-ī"},dat:{e:"-ō"},acc:{e:"-um"},abl:{e:"-ō"},voc:{e:"-um"}},
+  pl:{nom:{e:"-a"},gen:{e:"-ōrum"},dat:{e:"-īs"},acc:{e:"-a"},abl:{e:"-īs"},voc:{e:"-a"}}},
+ d3mf:{name:"3rd Declension",short:"3rd",gen:"M./F.",col:"c3",
+  sg:{nom:{e:"-s",note:"(modified stem)",alt:["modified stem","stem"],special:true},
+      gen:{e:"-is"},dat:{e:"-ī"},acc:{e:"-em",note:"(-im)",alt:["-im"]},
+      abl:{e:"-e",note:"(-ī)",alt:["-ī"]},
+      voc:{e:"-s",note:"(modified stem)",alt:["modified stem","stem"],special:true}},
+  pl:{nom:{e:"-ēs"},gen:{e:"-um",note:"/ -ium",alt:["-ium"]},dat:{e:"-ibus"},
+      acc:{e:"-ēs",note:"(-īs)",alt:["-īs"]},abl:{e:"-ibus"},voc:{e:"-ēs"}}},
+ d3n:{name:"3rd Declension",short:"3rd",gen:"N.",col:"cn",
+  sg:{nom:{e:"—",note:"(modified stem)",alt:["modified stem","stem","none"],special:true},
+      gen:{e:"-is"},dat:{e:"-ī"},
+      acc:{e:"—",note:"(like Nom.)",alt:["like nom","same as nom","modified stem","stem","none"],special:true},
+      abl:{e:"-e",note:"(-ī)",alt:["-ī"]},
+      voc:{e:"—",note:"(like Nom.)",alt:["like nom","same as nom","modified stem","stem","none"],special:true}},
+  pl:{nom:{e:"-a",note:"/ -ia",alt:["-ia"]},gen:{e:"-um",note:"/ -ium",alt:["-ium"]},dat:{e:"-ibus"},
+      acc:{e:"-a",note:"/ -ia",alt:["-ia"]},abl:{e:"-ibus"},voc:{e:"-a",note:"/ -ia",alt:["-ia"]}}}
+};
+var PKEYS=["d1","d2m","d2n","d3mf","d3n"];
+
+function $(s){return document.querySelector(s)}
+function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+function strip(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"")}
+function norm(s,strict){
+  var t=String(s==null?"":s).toLowerCase().trim().replace(/^[-–—\s]+/,"").replace(/[.\s]+$/,"");
+  t=t.replace(/[()]/g,"").replace(/\s+/g," ");
+  return strict?t:strip(t);
+}
+function accepts(cell,val,strict){
+  var v=norm(val,strict); if(!v)return false;
+  var list=[cell.e].concat(cell.alt||[]);
+  for(var i=0;i<list.length;i++){ if(norm(list[i],strict)===v) return true; }
+  return false;
+}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+
+/* ---------- score ---------- */
+var S={right:0,total:0,streak:0,best:0,misses:{}};
+try{var raw=localStorage.getItem("declension-drill-v1"); if(raw){var o=JSON.parse(raw); for(var k in o)S[k]=o[k];}}catch(e){}
+function save(){try{localStorage.setItem("declension-drill-v1",JSON.stringify(S));}catch(e){}}
+function paint(){
+  $("#s-right").textContent=S.right; $("#s-total").textContent=S.total;
+  $("#s-pct").textContent=S.total?Math.round(100*S.right/S.total)+"%":"—";
+  $("#s-streak").textContent=S.streak;
+}
+function noteMiss(pk,n,c){var k=pk+"|"+n+"|"+c; S.misses[k]=(S.misses[k]||0)+1;}
+function tick(ok,miss){
+  S.total++;
+  if(ok){S.right++;S.streak++;if(S.streak>S.best)S.best=S.streak;}
+  else{S.streak=0; if(miss)noteMiss(miss[0],miss[1],miss[2]);}
+  paint(); save(); renderMisses();
+}
+function renderMisses(){
+  var ks=Object.keys(S.misses).sort(function(a,b){return S.misses[b]-S.misses[a]}).slice(0,10);
+  $("#misslist").innerHTML = ks.length ? ks.map(function(k){
+    var p=k.split("|"), d=P[p[0]]; if(!d)return "";
+    return '<span class="chip '+d.col+'" style="margin:2px 5px 2px 0">'+d.short+' '+d.gen+' · '+
+      CL[p[2]]+' '+p[1]+' ×'+S.misses[k]+'</span>';
+  }).join("") : "Nothing yet. Keep going.";
+}
+
+/* ---------- tabs ---------- */
+$("#tabs").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-view]"); if(!b)return;
+  $$("#tabs button").forEach(function(x){x.setAttribute("aria-selected",String(x===b));});
+  $$("section.view").forEach(function(v){v.classList.toggle("on",v.id==="v-"+b.dataset.view);});
+  if(b.dataset.view==="drill")setTimeout(function(){$("#dr-input").focus()},40);
+});
+
+/* ---------- charts ---------- */
+function chartFor(keys,title){
+  var cols=keys.map(function(k){return P[k]});
+  var h='<div class="tablewrap"><table><caption>'+title+'</caption>';
+  h+='<thead><tr><th class="numlab"></th><th class="case"></th>'+
+     cols.map(function(c){return '<th class="case" style="text-align:center">'+c.gen+'</th>'}).join("")+
+     '</tr></thead><tbody>';
+  ["sg","pl"].forEach(function(n){
+    CASES.forEach(function(c,ci){
+      h+='<tr'+(ci===0?' class="numstart"':'')+'>';
+      if(ci===0)h+='<th class="numlab" rowspan="6">'+(n==="sg"?"Sing.":"Plur.")+'</th>';
+      h+='<th class="case">'+CL[c]+'</th>';
+      cols.forEach(function(col){
+        var cell=col[n][c];
+        h+='<td class="end col-'+col.col+'" tabindex="0"><span class="endv lat">'+cell.e+'</span>'+
+           (cell.note?'<span class="alt">'+cell.note+'</span>':'')+'</td>';
+      });
+      h+='</tr>';
+    });
+  });
+  return h+'</tbody></table></div>';
+}
+$("#chart-host").innerHTML =
+  chartFor(["d1"],"1st Declension")+chartFor(["d2m","d2n"],"2nd Declension")+chartFor(["d3mf","d3n"],"3rd Declension");
+$("#hide-ends").addEventListener("change",function(e){
+  $$("#chart-host .tablewrap").forEach(function(t){t.classList.toggle("hide-ends",e.target.checked);});
+});
+
+/* ---------- quick-fire declension ID ---------- */
+var ENTRIES=[
+ {e:"puella, puellae, f.",g:"girl",d:1,w:"Genitive -ae."},
+ {e:"nauta, nautae, m.",g:"sailor",d:1,w:"Genitive -ae → 1st, even though the word is masculine. Gender never sets the declension."},
+ {e:"servus, servī, m.",g:"slave",d:2,w:"Genitive -ī."},
+ {e:"bellum, bellī, n.",g:"war",d:2,w:"Genitive -ī → 2nd neuter."},
+ {e:"ager, agrī, m.",g:"field",d:2,w:"Genitive -ī. Note the stem is agr-, not ager-: the e drops out."},
+ {e:"puer, puerī, m.",g:"boy",d:2,w:"Genitive -ī. This -er noun keeps its e, so the stem is puer-."},
+ {e:"rēx, rēgis, m.",g:"king",d:3,w:"Genitive -is → 3rd. Stem rēg-."},
+ {e:"corpus, corporis, n.",g:"body",d:3,w:"Genitive -is → 3rd neuter. Stem corpor-, which the nominative gives no hint of."},
+ {e:"urbs, urbis, f.",g:"city",d:3,w:"Genitive -is. The stem ends in two consonants, so it is an i-stem: gen. pl. urbium."},
+ {e:"virtūs, virtūtis, f.",g:"courage, virtue",d:3,w:"Genitive -is → 3rd. Stem virtūt-."},
+ {e:"poēta, poētae, m.",g:"poet",d:1,w:"1st declension endings, masculine gender."},
+ {e:"mare, maris, n.",g:"sea",d:3,w:"Genitive -is → 3rd neuter, and a neuter i-stem (nom. sg. in -e): abl. sg. marī, pl. maria."},
+ {e:"nōmen, nōminis, n.",g:"name",d:3,w:"Genitive -is → 3rd neuter. Stem nōmin-."},
+ {e:"īnsula, īnsulae, f.",g:"island",d:1,w:"Genitive -ae."},
+ {e:"templum, templī, n.",g:"temple",d:2,w:"Genitive -ī → 2nd neuter."},
+ {e:"mīles, mīlitis, m.",g:"soldier",d:3,w:"Genitive -is → 3rd. Stem mīlit-, not mīles-."},
+ {e:"cīvis, cīvis, m.",g:"citizen",d:3,w:"Genitive -is. Same syllable count in both forms → i-stem: gen. pl. cīvium."},
+ {e:"agricola, agricolae, m.",g:"farmer",d:1,w:"Genitive -ae → 1st, masculine gender."}
+];
+var dqCur=null,dqR=0,dqT=0;
+function dqNew(){
+  var pool=ENTRIES.filter(function(x){return x!==dqCur});
+  dqCur=pick(pool);
+  $("#dq-entry").textContent=dqCur.e; $("#dq-gloss").textContent=dqCur.g;
+  $("#dq-verdict").classList.add("hidden");
+  $("#dq-opts").innerHTML=[1,2,3].map(function(n){
+    return '<button class="opt" data-d="'+n+'">'+n+(n===1?"st":n===2?"nd":"rd")+' declension</button>';
+  }).join("");
+}
+$("#dq-opts").addEventListener("click",function(e){
+  var b=e.target.closest(".opt"); if(!b||b.disabled)return;
+  var got=+b.dataset.d, ok=(got===dqCur.d);
+  $$("#dq-opts .opt").forEach(function(o){
+    o.disabled=true;
+    if(+o.dataset.d===dqCur.d)o.classList.add("is-ok");
+    else if(o===b)o.classList.add("is-bad");
+  });
+  dqT++; if(ok)dqR++;
+  $("#dq-tally").textContent=dqR+" / "+dqT;
+  S.total++; if(ok){S.right++;S.streak++;if(S.streak>S.best)S.best=S.streak;}else{S.streak=0;}
+  paint(); save();
+  var v=$("#dq-verdict");
+  v.className="verdict "+(ok?"ok":"bad");
+  v.innerHTML='<span class="mark">'+(ok?"✓":"✗")+'</span><div><b>'+dqCur.d+
+    (dqCur.d===1?"st":dqCur.d===2?"nd":"rd")+' declension</b><span class="note">'+esc(dqCur.w)+'</span></div>';
+  v.classList.remove("hidden");
+});
+$("#dq-next").addEventListener("click",dqNew);
+dqNew();
+
+/* ---------- ending drill ---------- */
+var drCur=null,drAnswered=false,drDots=[];
+function activeParadigms(){
+  var on=$$("#drill-filters input[data-p]").filter(function(i){return i.checked}).map(function(i){return i.dataset.p});
+  return on.length?on:PKEYS;
+}
+function drNew(){
+  var pool=[];
+  activeParadigms().forEach(function(pk){
+    ["sg","pl"].forEach(function(n){
+      CASES.forEach(function(c){ if(!P[pk][n][c].special)pool.push({pk:pk,n:n,c:c}); });
+    });
+  });
+  var q=pick(pool),guard=0;
+  while(drCur&&q.pk===drCur.pk&&q.n===drCur.n&&q.c===drCur.c&&guard++<12)q=pick(pool);
+  drCur=q; drAnswered=false;
+  var p=P[q.pk];
+  $("#dr-decl").innerHTML='<span class="chip '+p.col+'">'+p.short+' · '+p.gen+'</span>';
+  $("#dr-ask").textContent=CFULL[q.c]+" "+NUMF[q.n].toLowerCase();
+  $("#dr-verdict").classList.add("hidden");
+  var i=$("#dr-input"); i.value=""; i.disabled=false; i.focus();
+  $("#dr-submit").textContent="Check";
+}
+function drShow(ok,tried){
+  var cell=P[drCur.pk][drCur.n][drCur.c];
+  var full=cell.e+(cell.note?" "+cell.note:"");
+  var note="";
+  if(!ok&&tried)note="The answer is "+full+".";
+  else if(ok&&cell.note)note="Also valid here: "+cell.note.replace(/[()\/]/g," ").trim()+".";
+  var v=$("#dr-verdict");
+  v.className="verdict "+(ok?"ok":"bad");
+  v.innerHTML='<span class="mark">'+(ok?"✓":"✗")+'</span><div><b class="lat">'+full+'</b>'+
+    (note?'<span class="note">'+esc(note)+'</span>':'')+'</div>';
+  v.classList.remove("hidden");
+  $("#dr-input").disabled=true; $("#dr-submit").textContent="Next";
+  drDots.push(ok); if(drDots.length>20)drDots.shift();
+  $("#drill-dots").innerHTML=drDots.map(function(d){return '<i class="'+(d?"hit":"miss")+'"></i>'}).join("");
+}
+$("#dr-form").addEventListener("submit",function(e){
+  e.preventDefault();
+  if(drAnswered){drNew();return;}
+  var val=$("#dr-input").value;
+  if(!val.trim())return;
+  var ok=accepts(P[drCur.pk][drCur.n][drCur.c],val,$("#strict").checked);
+  drAnswered=true;
+  tick(ok, ok?null:[drCur.pk,drCur.n,drCur.c]);
+  drShow(ok,true);
+});
+$("#dr-skip").addEventListener("click",function(){
+  if(drAnswered){drNew();return;}
+  drAnswered=true;
+  tick(false,[drCur.pk,drCur.n,drCur.c]);
+  drShow(false,false);
+});
+$$("[data-ins]").forEach(function(b){
+  b.addEventListener("click",function(){
+    var i=$("#dr-input"); if(i.disabled)return;
+    i.value+=b.dataset.ins; i.focus();
+  });
+});
+$("#drill-filters").addEventListener("change",function(e){ if(e.target.dataset.p)drNew(); });
+
+/* ---------- decline a noun ---------- */
+var NOUNS=[
+ {entry:"puella, puellae, f.",gloss:"girl",stem:"puell",d:"d1",nom:"puella"},
+ {entry:"via, viae, f.",gloss:"road, way",stem:"vi",d:"d1",nom:"via"},
+ {entry:"nauta, nautae, m.",gloss:"sailor",stem:"naut",d:"d1",nom:"nauta"},
+ {entry:"amīcus, amīcī, m.",gloss:"friend",stem:"amīc",d:"d2m",nom:"amīcus",voc:"amīce"},
+ {entry:"puer, puerī, m.",gloss:"boy",stem:"puer",d:"d2m",nom:"puer",voc:"puer"},
+ {entry:"ager, agrī, m.",gloss:"field",stem:"agr",d:"d2m",nom:"ager",voc:"ager"},
+ {entry:"bellum, bellī, n.",gloss:"war",stem:"bell",d:"d2n",nom:"bellum"},
+ {entry:"dōnum, dōnī, n.",gloss:"gift",stem:"dōn",d:"d2n",nom:"dōnum"},
+ {entry:"rēx, rēgis, m.",gloss:"king",stem:"rēg",d:"d3mf",nom:"rēx"},
+ {entry:"mīles, mīlitis, m.",gloss:"soldier",stem:"mīlit",d:"d3mf",nom:"mīles"},
+ {entry:"virtūs, virtūtis, f.",gloss:"courage",stem:"virtūt",d:"d3mf",nom:"virtūs"},
+ {entry:"urbs, urbis, f.",gloss:"city",stem:"urb",d:"d3mf",nom:"urbs",i:true},
+ {entry:"corpus, corporis, n.",gloss:"body",stem:"corpor",d:"d3n",nom:"corpus"},
+ {entry:"nōmen, nōminis, n.",gloss:"name",stem:"nōmin",d:"d3n",nom:"nōmen"},
+ {entry:"mare, maris, n.",gloss:"sea",stem:"mar",d:"d3n",nom:"mare",i:true}
+];
+function formOf(nn,n,c){
+  var d=nn.d, st=nn.stem;
+  function bare(e){return st+e.replace(/^-/,"")}
+  if(n==="sg"){
+    if(c==="nom")return nn.nom;
+    if(c==="voc"){
+      if(nn.voc)return nn.voc;
+      if(d==="d2m")return bare("-e");
+      if(d==="d3mf"||d==="d3n")return nn.nom;
+      return bare(P[d].sg.voc.e);
+    }
+    if(d==="d3n"&&c==="acc")return nn.nom;
+    if((d==="d3n"||d==="d3mf")&&c==="abl")return st+((nn.i&&d==="d3n")?"ī":"e");
+  }else{
+    if((d==="d3mf"||d==="d3n")&&c==="gen")return st+(nn.i?"ium":"um");
+    if(d==="d3n"&&(c==="nom"||c==="acc"||c==="voc"))return st+(nn.i?"ia":"a");
+  }
+  return bare(P[d][n][c].e);
+}
+var dcCur=null;
+function dcRender(){
+  var nn=dcCur, endMode=$("#dc-endings").checked;
+  $("#dc-entry").textContent=nn.entry;
+  $("#dc-meta").innerHTML='<span class="chip '+P[nn.d].col+'">'+P[nn.d].short+' '+P[nn.d].gen+'</span> &nbsp;'+
+    esc(nn.gloss)+' &nbsp;·&nbsp; stem <b class="lat">'+nn.stem+'-</b>'+(nn.i?' &nbsp;·&nbsp; <b>i-stem</b>':'');
+  $("#dc-score").textContent="";
+  var h='<thead><tr><th class="numlab"></th><th class="case"></th><th class="case" style="width:auto">'+
+        (endMode?"Ending":"Full form")+'</th><th class="case" style="width:118px">Answer</th></tr></thead><tbody>';
+  ["sg","pl"].forEach(function(n){
+    CASES.forEach(function(c,ci){
+      var given=(n==="sg"&&c==="nom"&&!endMode);
+      h+='<tr'+(ci===0?' class="numstart"':'')+'>';
+      if(ci===0)h+='<th class="numlab" rowspan="6">'+(n==="sg"?"Sing.":"Plur.")+'</th>';
+      h+='<th class="case">'+CL[c]+'</th><td>';
+      if(given)h+='<input type="text" class="given" value="'+nn.nom+'" readonly aria-label="given form">';
+      else h+='<input type="text" data-n="'+n+'" data-c="'+c+'" spellcheck="false" aria-label="'+CFULL[c]+' '+NUMF[n]+'">';
+      h+='</td><td class="solution" data-sol="'+n+c+'"></td></tr>';
+    });
+  });
+  $("#dc-grid").innerHTML=h+'</tbody>';
+}
+function dcNew(){ dcCur=pick(NOUNS.filter(function(x){return x!==dcCur})); dcRender(); }
+$("#dc-new").addEventListener("click",dcNew);
+$("#dc-endings").addEventListener("change",dcRender);
+$("#dc-check").addEventListener("click",function(){
+  var endMode=$("#dc-endings").checked, strict=$("#strict").checked, right=0, asked=0;
+  $$("#dc-grid input[data-n]").forEach(function(inp){
+    var n=inp.dataset.n, c=inp.dataset.c, cell=P[dcCur.d][n][c];
+    var want = endMode ? (cell.e+(cell.note?" "+cell.note:"")) : formOf(dcCur,n,c);
+    var ok = endMode ? accepts(cell,inp.value,strict) : (norm(inp.value,strict)===norm(formOf(dcCur,n,c),strict));
+    inp.classList.toggle("ok",ok); inp.classList.toggle("bad",!ok);
+    var sol=$('[data-sol="'+n+c+'"]');
+    sol.textContent = ok ? "✓" : want;
+    sol.style.color = ok ? "var(--ok)" : "var(--bad)";
+    asked++; if(ok)right++; else noteMiss(dcCur.d,n,c);
+  });
+  S.total+=asked; S.right+=right;
+  S.streak = (right===asked && asked>0) ? S.streak+1 : 0;
+  if(S.streak>S.best)S.best=S.streak;
+  paint(); save(); renderMisses();
+  $("#dc-score").textContent=right+" of "+asked+" correct";
+  $("#dc-score").style.color = (right===asked&&asked>0) ? "var(--ok)" : "var(--ink-2)";
+});
+dcNew();
+
+/* ---------- decoder ---------- */
+var AMBIG={};
+PKEYS.forEach(function(pk){
+  ["sg","pl"].forEach(function(n){
+    CASES.forEach(function(c){
+      var cell=P[pk][n][c]; if(cell.special)return;
+      [cell.e].concat(cell.alt||[]).forEach(function(raw){
+        if(raw.charAt(0)!=="-")return;
+        (AMBIG[raw]=AMBIG[raw]||[]).push({pk:pk,n:n,c:c});
+      });
+    });
+  });
+});
+var DEC_ORDER=["-a","-ā","-ae","-am","-ās","-ārum","-e","-em","-ēs","-ī","-īs","-is","-ia",
+  "-ibus","-im","-ium","-ō","-ōrum","-ōs","-um","-us"].filter(function(k){return AMBIG[k]});
+var decCur="-ae", decShown=false;
+function decRender(){
+  $("#dec-buttons").innerHTML=DEC_ORDER.map(function(k){
+    return '<button class="endbtn lat" data-e="'+k+'" aria-pressed="'+(k===decCur)+'">'+k+'</button>';
+  }).join("");
+  var rows=AMBIG[decCur]||[];
+  $("#dec-big").textContent=decCur;
+  $("#dec-count").textContent = rows.length===1
+    ? "One job only — within declensions 1–3 this ending is unambiguous."
+    : rows.length+" different jobs across declensions 1–3. Name them all, then reveal.";
+  $("#dec-list").innerHTML = decShown ? rows.map(function(r){
+    var p=P[r.pk];
+    return '<div class="parse"><span class="chip '+p.col+'">'+p.short+' '+p.gen+'</span>'+
+      '<span class="what">'+CFULL[r.c]+' <em>'+NUMF[r.n].toLowerCase()+'</em></span></div>';
+  }).join("") : "";
+  $("#dec-reveal").textContent = decShown ? "Hide" : "Reveal";
+}
+$("#dec-buttons").addEventListener("click",function(e){
+  var b=e.target.closest(".endbtn"); if(!b)return;
+  decCur=b.dataset.e; decShown=false; decRender();
+});
+$("#dec-reveal").addEventListener("click",function(){ decShown=!decShown; decRender(); });
+
+/* ---------- neuters ---------- */
+var FAMNOTE={
+  us:"The -us family: nominative in -us, stem in -or- or -er-. It looks like 2nd-declension servus and is nothing of the kind.",
+  men:"The -men family: every one takes -min- in the stem. Perfectly regular — learn one, you have them all.",
+  i:"A neuter i-stem: abl. sg. -ī, nom./acc./voc. pl. -ia, gen. pl. -ium.",
+  odd:"Irregular. This one has to be learned on its own."
+};
+var NSTEMS=[
+ {n:"corpus",g:"corporis",s:"corpor",gl:"body",f:"us"},
+ {n:"tempus",g:"temporis",s:"tempor",gl:"time",f:"us"},
+ {n:"opus",g:"operis",s:"oper",gl:"work, task",f:"us"},
+ {n:"genus",g:"generis",s:"gener",gl:"kind, birth",f:"us"},
+ {n:"vulnus",g:"vulneris",s:"vulner",gl:"wound",f:"us"},
+ {n:"scelus",g:"sceleris",s:"sceler",gl:"crime",f:"us"},
+ {n:"latus",g:"lateris",s:"later",gl:"side, flank",f:"us"},
+ {n:"onus",g:"oneris",s:"oner",gl:"burden",f:"us"},
+ {n:"pectus",g:"pectoris",s:"pector",gl:"chest, heart",f:"us"},
+ {n:"sīdus",g:"sīderis",s:"sīder",gl:"star, constellation",f:"us"},
+ {n:"mūnus",g:"mūneris",s:"mūner",gl:"duty, gift",f:"us"},
+ {n:"nōmen",g:"nōminis",s:"nōmin",gl:"name",f:"men"},
+ {n:"flūmen",g:"flūminis",s:"flūmin",gl:"river",f:"men"},
+ {n:"carmen",g:"carminis",s:"carmin",gl:"song, poem",f:"men"},
+ {n:"lūmen",g:"lūminis",s:"lūmin",gl:"light",f:"men"},
+ {n:"agmen",g:"agminis",s:"agmin",gl:"column, marching army",f:"men"},
+ {n:"ōmen",g:"ōminis",s:"ōmin",gl:"omen, sign",f:"men"},
+ {n:"mare",g:"maris",s:"mar",gl:"sea",f:"i"},
+ {n:"animal",g:"animālis",s:"animāl",gl:"animal",f:"i"},
+ {n:"exemplar",g:"exemplāris",s:"exemplār",gl:"model, pattern",f:"i"},
+ {n:"caput",g:"capitis",s:"capit",gl:"head",f:"odd"},
+ {n:"iter",g:"itineris",s:"itiner",gl:"journey, route",f:"odd"},
+ {n:"cor",g:"cordis",s:"cord",gl:"heart",f:"odd"},
+ {n:"ōs",g:"ōris",s:"ōr",gl:"mouth, face",f:"odd"}
+];
+var NROLES=[
+ {s:"Rōmānī ~bella~ gerunt.",a:"acc",t:"The Romans wage wars.",
+  w:"Rōmānī is nominative plural and has already taken the subject slot, so bella must be the object."},
+ {s:"~Bella~ sunt longa.",a:"nom",t:"Wars are long.",
+  w:"sunt is a linking verb with no other candidate, and longa is a neuter plural adjective agreeing with it."},
+ {s:"Poēta ~carmen~ scrībit.",a:"acc",t:"The poet writes a song.",
+  w:"Poēta is the nominative subject and scrībit is transitive, so carmen is what gets written."},
+ {s:"~Carmen~ poētam dēlectat.",a:"nom",t:"The song delights the poet.",
+  w:"poētam ends in -m, so it is the accusative object. That leaves carmen as the subject."},
+ {s:"Mīlitēs ~flūmen~ vident.",a:"acc",t:"The soldiers see the river.",
+  w:"Mīlitēs is nominative plural to match vident; flūmen is what they see."},
+ {s:"~Flūmen~ est lātum.",a:"nom",t:"The river is wide.",
+  w:"est plus the neuter predicate adjective lātum — flūmen is the subject."},
+ {s:"~Nōmina~ rēgum sunt clāra.",a:"nom",t:"The names of the kings are famous.",
+  w:"sunt is plural and rēgum is genitive plural, so nōmina is the only thing left to be the subject."},
+ {s:"Rēx ~nōmen~ habet.",a:"acc",t:"The king has a name.",
+  w:"Rēx is the nominative subject of habet."},
+ {s:"Agricolae ~dōna~ portant.",a:"acc",t:"The farmers carry the gifts.",
+  w:"portant is plural and agricolae is its nominative subject."},
+ {s:"~Dōna~ puellās dēlectant.",a:"nom",t:"The gifts delight the girls.",
+  w:"puellās is accusative plural (long vowel + s), so dōna must be the subject."},
+ {s:"Nautae ~mare~ timent.",a:"acc",t:"The sailors fear the sea.",
+  w:"Nautae is nominative plural with timent; mare is what they fear."},
+ {s:"~Mare~ est magnum.",a:"nom",t:"The sea is great.",
+  w:"est with the neuter predicate adjective magnum."},
+ {s:"Medicus ~corpus~ cūrat.",a:"acc",t:"The doctor tends the body.",
+  w:"Medicus is the nominative subject and cūrat is transitive."},
+ {s:"~Corpora~ mīlitum in agrō iacent.",a:"nom",t:"The bodies of the soldiers lie in the field.",
+  w:"iacent is intransitive and plural; mīlitum is genitive plural. Corpora has to be the subject."},
+ {s:"Puer ~templum~ videt.",a:"acc",t:"The boy sees the temple.",
+  w:"Puer is the nominative subject of videt."},
+ {s:"~Templa~ deōrum sunt antīqua.",a:"nom",t:"The temples of the gods are ancient.",
+  w:"deōrum is genitive plural and sunt needs a plural subject."}
+];
+var NTRAP=[
+ {n:"servus",g:"servī",gl:"slave",k:"m"},{n:"amīcus",g:"amīcī",gl:"friend",k:"m"},
+ {n:"equus",g:"equī",gl:"horse",k:"m"},{n:"mūrus",g:"mūrī",gl:"wall",k:"m"},
+ {n:"animus",g:"animī",gl:"mind, spirit",k:"m"},{n:"populus",g:"populī",gl:"people",k:"m"},
+ {n:"hortus",g:"hortī",gl:"garden",k:"m"},{n:"dominus",g:"dominī",gl:"master",k:"m"},
+ {n:"lūdus",g:"lūdī",gl:"game, school",k:"m"},{n:"campus",g:"campī",gl:"plain, field",k:"m"},
+ {n:"corpus",g:"corporis",gl:"body",k:"n"},{n:"tempus",g:"temporis",gl:"time",k:"n"},
+ {n:"opus",g:"operis",gl:"work, task",k:"n"},{n:"genus",g:"generis",gl:"kind, birth",k:"n"},
+ {n:"vulnus",g:"vulneris",gl:"wound",k:"n"},{n:"scelus",g:"sceleris",gl:"crime",k:"n"},
+ {n:"latus",g:"lateris",gl:"side, flank",k:"n"},{n:"onus",g:"oneris",gl:"burden",k:"n"},
+ {n:"pectus",g:"pectoris",gl:"chest, heart",k:"n"},{n:"sīdus",g:"sīderis",gl:"star",k:"n"},
+ {n:"mūnus",g:"mūneris",gl:"duty, gift",k:"n"}
+];
+var BLURB={
+  stem:"You cannot derive corporis from corpus. Given the nominative, produce the genitive — that is the form that hands you the stem for every other cell.",
+  role:"The ending has stopped telling you the case. Decide from the rest of the sentence.",
+  trap:"Every word here ends in -us. Half are 2nd-declension masculine, half are 3rd-declension neuter. No ending can tell you which."
+};
+var ntMode="stem", ntCur=null, ntDone=false;
+
+function ntShowVerdict(ok,html){
+  var v=$("#nt-verdict");
+  v.className="verdict "+(ok?"ok":"bad");
+  v.innerHTML='<span class="mark">'+(ok?"✓":"✗")+'</span><div>'+html+'</div>';
+  v.classList.remove("hidden");
+  $("#nt-nextrow").classList.remove("hidden");
+}
+function ntNew(){
+  ntDone=false;
+  $("#nt-verdict").classList.add("hidden");
+  $("#nt-nextrow").classList.add("hidden");
+  $("#nt-form").classList.add("hidden");
+  $("#nt-opts").classList.add("hidden");
+  $("#nt-blurb").textContent=BLURB[ntMode];
+  $$("#nt-modes button").forEach(function(b){b.setAttribute("aria-selected",String(b.dataset.m===ntMode));});
+
+  if(ntMode==="stem"){
+    ntCur=pick(NSTEMS.filter(function(x){return x!==ntCur}));
+    $("#nt-tag").innerHTML='<span class="chip cn">3rd · N.</span>';
+    $("#nt-body").innerHTML='<div class="ask lat">'+ntCur.n+'</div><div class="gloss">'+esc(ntCur.gl)+'</div>'+
+      '<div class="sub" style="margin-top:8px">Give the genitive singular</div>';
+    $("#nt-form").classList.remove("hidden");
+    var i=$("#nt-input"); i.value=""; i.disabled=false; i.placeholder="—"; i.focus();
+    $("#nt-submit").textContent="Check";
+  }
+  else if(ntMode==="role"){
+    ntCur=pick(NROLES.filter(function(x){return x!==ntCur}));
+    $("#nt-tag").innerHTML='<span class="chip cn">Neuter in context</span>';
+    $("#nt-body").innerHTML='<div class="sent">'+ntCur.s.replace(/~([^~]+)~/,"<b>$1</b>")+'</div>';
+    $("#nt-opts").innerHTML=
+      '<button class="opt" data-a="nom">Nominative &mdash; it is the subject</button>'+
+      '<button class="opt" data-a="acc">Accusative &mdash; it is the object</button>';
+    $("#nt-opts").classList.remove("hidden");
+  }
+  else{
+    ntCur=pick(NTRAP.filter(function(x){return x!==ntCur}));
+    $("#nt-tag").innerHTML='<span class="chip cn">Masculine or neuter?</span>';
+    $("#nt-body").innerHTML='<div class="ask lat">'+ntCur.n+'</div><div class="gloss">'+esc(ntCur.gl)+'</div>';
+    $("#nt-opts").innerHTML=
+      '<button class="opt" data-a="m">2nd declension masculine</button>'+
+      '<button class="opt" data-a="n">3rd declension neuter</button>';
+    $("#nt-opts").classList.remove("hidden");
+  }
+}
+function ntScore(ok,pk,n,c){
+  S.total++;
+  if(ok){S.right++;S.streak++;if(S.streak>S.best)S.best=S.streak;}
+  else{S.streak=0; if(pk)noteMiss(pk,n,c);}
+  paint(); save(); renderMisses();
+}
+$("#nt-modes").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-m]"); if(!b)return;
+  ntMode=b.dataset.m; ntCur=null; ntNew();
+});
+$("#nt-opts").addEventListener("click",function(e){
+  var b=e.target.closest(".opt"); if(!b||b.disabled||ntDone)return;
+  ntDone=true;
+  var want = (ntMode==="role") ? ntCur.a : ntCur.k;
+  var ok = (b.dataset.a===want);
+  $$("#nt-opts .opt").forEach(function(o){
+    o.disabled=true;
+    if(o.dataset.a===want)o.classList.add("is-ok");
+    else if(o===b)o.classList.add("is-bad");
+  });
+  if(ntMode==="role"){
+    ntScore(ok,null);
+    ntShowVerdict(ok,'<b>'+(want==="nom"?"Nominative — subject":"Accusative — object")+'</b>'+
+      '<span class="note">“'+esc(ntCur.t)+'” &nbsp;'+esc(ntCur.w)+'</span>');
+  }else{
+    ntScore(ok,null);
+    ntShowVerdict(ok,'<b class="lat">'+ntCur.n+', '+ntCur.g+'</b><span class="note">'+
+      (want==="n"
+        ? "Genitive -is → 3rd declension neuter. The -us nominative is a disguise; the stem is "+
+          ntCur.g.replace(/is$/,"")+"-."
+        : "Genitive -ī → 2nd declension masculine, exactly what it looks like.")+'</span>');
+  }
+});
+$("#nt-form").addEventListener("submit",function(e){
+  e.preventDefault();
+  if(ntDone){ntNew();return;}
+  var val=$("#nt-input").value; if(!val.trim())return;
+  var ok=(norm(val,$("#strict").checked)===norm(ntCur.g,$("#strict").checked));
+  ntDone=true;
+  $("#nt-input").disabled=true; $("#nt-submit").textContent="Next";
+  ntScore(ok,ok?null:"d3n","sg","gen");
+  ntShowVerdict(ok,'<b class="lat">'+ntCur.n+', '+ntCur.g+'</b><span class="note">Stem <b>'+ntCur.s+
+    '-</b>. '+esc(FAMNOTE[ntCur.f])+'</span>');
+});
+$("#nt-skip").addEventListener("click",function(){
+  if(ntDone){ntNew();return;}
+  ntDone=true;
+  $("#nt-input").disabled=true; $("#nt-submit").textContent="Next";
+  ntScore(false,"d3n","sg","gen");
+  ntShowVerdict(false,'<b class="lat">'+ntCur.n+', '+ntCur.g+'</b><span class="note">Stem <b>'+ntCur.s+
+    '-</b>. '+esc(FAMNOTE[ntCur.f])+'</span>');
+});
+$("#nt-next").addEventListener("click",ntNew);
+
+/* ---------- init ---------- */
+drNew(); decRender(); ntNew(); renderMisses(); paint();
+
+function boot(st){
+  if(st&&st.view){
+    var b=document.querySelector('#tabs button[data-view="'+st.view+'"]');
+    if(b)b.click();
+  }
+}
+try{
+  if(window.claude&&window.claude.hot){
+    window.claude.hot.snapshot(function(){
+      var a=document.querySelector('#tabs button[aria-selected="true"]');
+      return {view:a?a.dataset.view:"guide"};
+    });
+    window.claude.hot.ready ? window.claude.hot.ready(boot) : boot(window.claude.hot.data);
+  }
+}catch(e){}
+})();
+</script>
