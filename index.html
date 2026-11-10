@@ -649,7 +649,7 @@ input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 
       <div class="grid2">
         <div class="stack-sm">
           <p style="font-size:14px"><span class="chip c2">1st/2nd</span> Nothing new. Masculine is <span class="lat">servus</span>, feminine is <span class="lat">puella</span>, neuter is <span class="lat">bellum</span>. If you know the noun charts, you know this one.</p>
-          <p style="font-size:14px"><span class="chip c3">3rd</span> One set of endings for M. and F. The neuter differs only where the Neuter Law says it must (nom./acc./voc.). Watch the i-stem trio <span class="lat">-ī, -ium, -ia</span>.</p>
+          <p style="font-size:14px"><span class="chip c3">3rd</span> One set of endings for M. and F. The neuter differs only where the Neuter Law says it must (nom./acc.). Watch the i-stem trio <span class="lat">-ī, -ium, -ia</span>.</p>
         </div>
         <div class="stack-sm">
           <p style="font-size:14px"><span class="chip c1">Comp.</span> <span class="lat">-iōr-</span> runs through every case except the nominative singular. Neuter singular <span class="lat">-ius</span> looks like 2nd-declension <span class="lat">-us</span>, but it isn&rsquo;t.</p>
@@ -782,7 +782,7 @@ input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 
     </div>
     <div class="panel stack-sm">
       <h3>Adjective endings that fool you</h3>
-      <p style="font-size:14px"><b class="lat">-is</b> vs <b class="lat">-īs</b> &mdash; short <span class="lat">-is</span> is 3rd nom./voc. sg. (<span class="lat">omnis</span>) or 3rd gen. sg. Long <span class="lat">-īs</span> is 1st/2nd dat./abl. plural, or a 3rd-declension acc. plural.</p>
+      <p style="font-size:14px"><b class="lat">-is</b> vs <b class="lat">-īs</b> &mdash; short <span class="lat">-is</span> is 3rd nom. sg. (<span class="lat">omnis</span>) or 3rd gen. sg. Long <span class="lat">-īs</span> is 1st/2nd dat./abl. plural, or a 3rd-declension acc. plural.</p>
       <p style="font-size:14px"><b class="lat">-ius</b> &mdash; comparative neuter nom./acc. sg. (<span class="lat">longius</span>). It is never a 2nd-declension ending.</p>
       <p style="font-size:14px"><b class="lat">-ī</b> &mdash; 1st/2nd gen. sg. or nom. pl. masculine, or 3rd dat. and abl. sg. in every gender.</p>
     </div>
@@ -1327,6 +1327,7 @@ $("#nt-next").addEventListener("click",ntNew);
 
 /* ---------- adjectives ---------- */
 var GENS=["m","f","n"];
+var ACASES=["nom","gen","dat","acc","abl"]; // adjectives are drilled without the vocative
 var GL={m:"M.",f:"F.",n:"N."}, GFULL={m:"masculine",f:"feminine",n:"neuter"};
 function ac(e,alt,note){var o={e:e}; if(alt)o.alt=alt; if(note)o.note=note; return o;}
 function tri(m,f,n){
@@ -1336,25 +1337,25 @@ function tri(m,f,n){
 var A={
  a12:{short:"1st/2nd",col:"c2",model:"bonus, bona, bonum",
   sg:{nom:tri(ac("-us",["-er"],"(-er)"),"-a","-um"),gen:tri("-ī","-ae","-ī"),dat:tri("-ō","-ae","-ō"),
-      acc:tri("-um","-am","-um"),abl:tri("-ō","-ā","-ō"),voc:tri(ac("-e",["-er"],"(-er)"),"-a","-um")},
+      acc:tri("-um","-am","-um"),abl:tri("-ō","-ā","-ō")},
   pl:{nom:tri("-ī","-ae","-a"),gen:tri("-ōrum","-ārum","-ōrum"),dat:tri("-īs","-īs","-īs"),
-      acc:tri("-ōs","-ās","-a"),abl:tri("-īs","-īs","-īs"),voc:tri("-ī","-ae","-a")}},
+      acc:tri("-ōs","-ās","-a"),abl:tri("-īs","-īs","-īs")}},
  a3:{short:"3rd",col:"c3",model:"omnis, omne",
   sg:{nom:tri("-is","-is","-e"),gen:tri("-is","-is","-is"),dat:tri("-ī","-ī","-ī"),
-      acc:tri("-em","-em","-e"),abl:tri("-ī","-ī","-ī"),voc:tri("-is","-is","-e")},
+      acc:tri("-em","-em","-e"),abl:tri("-ī","-ī","-ī")},
   pl:{nom:tri("-ēs","-ēs","-ia"),gen:tri("-ium","-ium","-ium"),dat:tri("-ibus","-ibus","-ibus"),
       acc:tri(ac("-ēs",["-īs"],"(-īs)"),ac("-ēs",["-īs"],"(-īs)"),"-ia"),
-      abl:tri("-ibus","-ibus","-ibus"),voc:tri("-ēs","-ēs","-ia")}},
+      abl:tri("-ibus","-ibus","-ibus")}},
  acmp:{short:"Comp.",col:"c1",model:"longior, longius",
   sg:{nom:tri("-ior","-ior","-ius"),gen:tri("-iōris","-iōris","-iōris"),dat:tri("-iōrī","-iōrī","-iōrī"),
-      acc:tri("-iōrem","-iōrem","-ius"),abl:tri("-iōre","-iōre","-iōre"),voc:tri("-ior","-ior","-ius")},
+      acc:tri("-iōrem","-iōrem","-ius"),abl:tri("-iōre","-iōre","-iōre")},
   pl:{nom:tri("-iōrēs","-iōrēs","-iōra"),gen:tri("-iōrum","-iōrum","-iōrum"),
       dat:tri("-iōribus","-iōribus","-iōribus"),acc:tri("-iōrēs","-iōrēs","-iōra"),
-      abl:tri("-iōribus","-iōribus","-iōribus"),voc:tri("-iōrēs","-iōrēs","-iōra")}}
+      abl:tri("-iōribus","-iōribus","-iōribus")}}
 };
 var AKEYS=["a12","a3","acmp"];
 // comparative endings are also accepted without the leading i (-ōris after longi-)
-["sg","pl"].forEach(function(n){CASES.forEach(function(c){GENS.forEach(function(g){
+["sg","pl"].forEach(function(n){ACASES.forEach(function(c){GENS.forEach(function(g){
   var cell=A.acmp[n][c][g]; cell.xalt=[cell.e.replace(/^-i/,"-")];
 });});});
 function aAccepts(cell,val,strict){
@@ -1371,7 +1372,8 @@ function aTick(ok,key){
   paint(); save(); aRenderMisses();
 }
 function aRenderMisses(){
-  var ks=Object.keys(S.amisses).sort(function(a,b){return S.amisses[b]-S.amisses[a]}).slice(0,10);
+  var ks=Object.keys(S.amisses).filter(function(k){return ACASES.indexOf(k.split("|")[2])>=0})
+    .sort(function(a,b){return S.amisses[b]-S.amisses[a]}).slice(0,10);
   $("#a-misslist").innerHTML = ks.length ? ks.map(function(k){
     var p=k.split("|"), d=A[p[0]]; if(!d)return "";
     return '<span class="chip '+d.col+'" style="margin:2px 5px 2px 0">'+d.short+' · '+
@@ -1408,9 +1410,9 @@ function aChart(k,title){
      GENS.map(function(g){return '<th class="case" style="text-align:center">'+GL[g]+'</th>'}).join("")+
      '</tr></thead><tbody>';
   ["sg","pl"].forEach(function(n){
-    CASES.forEach(function(c,ci){
+    ACASES.forEach(function(c,ci){
       h+='<tr'+(ci===0?' class="numstart"':'')+'>';
-      if(ci===0)h+='<th class="numlab" rowspan="6">'+(n==="sg"?"Sing.":"Plur.")+'</th>';
+      if(ci===0)h+='<th class="numlab" rowspan="'+ACASES.length+'">'+(n==="sg"?"Sing.":"Plur.")+'</th>';
       h+='<th class="case">'+CL[c]+'</th>';
       GENS.forEach(function(g){
         var cell=p[n][c][g];
@@ -1500,7 +1502,7 @@ function adNew(){
   var on=$$("#ad-filters input[data-p]").filter(function(i){return i.checked}).map(function(i){return i.dataset.p});
   if(!on.length)on=AKEYS;
   var pool=[];
-  on.forEach(function(k){["sg","pl"].forEach(function(n){CASES.forEach(function(c){GENS.forEach(function(g){
+  on.forEach(function(k){["sg","pl"].forEach(function(n){ACASES.forEach(function(c){GENS.forEach(function(g){
     pool.push({k:k,n:n,c:c,g:g});
   });});});});
   var q=pick(pool),guard=0;
@@ -1574,10 +1576,6 @@ function aForm(it,n,c,g){
   var gi=GENS.indexOf(g);
   if(n==="sg"){
     if(c==="nom")return it.nom[gi];
-    if(c==="voc"){
-      if(it.cls==="a12"&&g==="m")return /us$/.test(it.nom[0])?it.stem+"e":it.nom[0];
-      return it.nom[gi];
-    }
     if(c==="acc"&&g==="n")return it.nom[2];
   }
   return it.stem+A[it.cls][n][c][g].e.replace(/^-/,"");
@@ -1597,9 +1595,9 @@ function acRender(){
   var h='<thead><tr><th class="numlab"></th><th class="case"></th>'+
     GENS.map(function(g){return '<th class="case" style="width:auto">'+GL[g]+'</th>'}).join("")+'</tr></thead><tbody>';
   ["sg","pl"].forEach(function(n){
-    CASES.forEach(function(c,ci){
+    ACASES.forEach(function(c,ci){
       h+='<tr'+(ci===0?' class="numstart"':'')+'>';
-      if(ci===0)h+='<th class="numlab" rowspan="6">'+(n==="sg"?"Sing.":"Plur.")+'</th>';
+      if(ci===0)h+='<th class="numlab" rowspan="'+ACASES.length+'">'+(n==="sg"?"Sing.":"Plur.")+'</th>';
       h+='<th class="case">'+CL[c]+'</th>';
       GENS.forEach(function(g,gi){
         h+='<td>';
@@ -1714,7 +1712,7 @@ $("#ag-filters").addEventListener("change",agNew);
 
 /* decoder */
 var AAMB={};
-AKEYS.forEach(function(k){["sg","pl"].forEach(function(n){CASES.forEach(function(c){GENS.forEach(function(g){
+AKEYS.forEach(function(k){["sg","pl"].forEach(function(n){ACASES.forEach(function(c){GENS.forEach(function(g){
   var cell=A[k][n][c][g];
   [cell.e].concat(cell.alt||[]).forEach(function(raw){
     if(raw.charAt(0)!=="-")return;
