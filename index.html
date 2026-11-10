@@ -214,7 +214,8 @@ input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 
 
 /* adjectives module */
 .adjgrid td{vertical-align:top}
-.adjgrid input[type="text"]{min-width:92px}
+.adjgrid input[type="text"]{min-width:88px}
+.adjgrid .blk{border-left:2px solid var(--line-2)}
 .adjgrid .solution{display:block; font-size:13.5px; min-height:1.35em; margin-top:3px}
 .a-pane{display:flex; flex-direction:column; gap:26px}
 .keys .btn{font-family:Spectral,serif; padding:4px 11px}
@@ -709,6 +710,8 @@ input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 
         </div>
         <span class="tiny" id="ac-score"></span>
       </div>
+      <p class="tiny">Same form as the cell just to its left, in the same number? Draw an arrow like on the test:
+        type <b>-&gt;</b> or press <button class="btn" type="button" id="ac-arrow" style="padding:2px 10px">&rarr;</button>.</p>
       <div class="tablewrap" style="border:0">
         <table class="declgrid adjgrid" id="ac-grid"></table>
       </div>
@@ -1592,25 +1595,40 @@ function acRender(){
   $("#ac-meta").innerHTML='<span class="chip '+p.col+'">'+p.short+'</span> &nbsp;'+ADEG[it.deg]+
     ' &nbsp;·&nbsp; '+esc(it.gloss)+' &nbsp;·&nbsp; stem <b class="lat">'+it.stem+'-</b>';
   $("#ac-score").textContent="";
-  var h='<thead><tr><th class="numlab"></th><th class="case"></th>'+
-    GENS.map(function(g){return '<th class="case" style="width:auto">'+GL[g]+'</th>'}).join("")+'</tr></thead><tbody>';
-  ["sg","pl"].forEach(function(n){
-    ACASES.forEach(function(c,ci){
-      h+='<tr'+(ci===0?' class="numstart"':'')+'>';
-      if(ci===0)h+='<th class="numlab" rowspan="'+ACASES.length+'">'+(n==="sg"?"Sing.":"Plur.")+'</th>';
-      h+='<th class="case">'+CL[c]+'</th>';
+  // laid out like the paper chart: cases down the side, M F N singular | M F N plural across
+  function blk(n,g){return n==="pl"&&g==="m"?" blk":""}
+  var h='<thead><tr><th class="case"></th>'+
+    '<th class="case" colspan="3" style="width:auto;text-align:center">Singular</th>'+
+    '<th class="case blk" colspan="3" style="width:auto;text-align:center">Plural</th></tr><tr><th class="case"></th>'+
+    ["sg","pl"].map(function(n){return GENS.map(function(g){
+      return '<th class="case'+blk(n,g)+'" style="width:auto;text-align:center">'+GL[g]+'</th>';
+    }).join("")}).join("")+'</tr></thead><tbody>';
+  ACASES.forEach(function(c){
+    h+='<tr><th class="case">'+CL[c]+'</th>';
+    ["sg","pl"].forEach(function(n){
       GENS.forEach(function(g,gi){
-        h+='<td>';
-        if(n==="sg"&&c==="nom")h+='<input type="text" class="given" value="'+it.nom[gi]+'" readonly aria-label="given form">';
+        h+='<td class="'+blk(n,g).trim()+'">';
+        if(n==="sg"&&c==="nom"){
+          var shown=(gi>0&&it.nom[gi]===it.nom[gi-1])?"→":it.nom[gi];
+          h+='<input type="text" class="given" value="'+shown+'" readonly aria-label="given form">';
+        }
         else h+='<input type="text" data-n="'+n+'" data-c="'+c+'" data-g="'+g+'" spellcheck="false" aria-label="'+
           CFULL[c]+' '+NUMF[n]+' '+GFULL[g]+'">';
         h+='<span class="solution" data-sol="'+n+c+g+'"></span></td>';
       });
-      h+='</tr>';
     });
+    h+='</tr>';
   });
   $("#ac-grid").innerHTML=h+'</tbody>';
 }
+function isArrow(v){return /^\s*(→|⟶|->|-->|=>|>)\s*$/.test(v)}
+$("#ac-grid").addEventListener("input",function(e){
+  var v=e.target.value; if(/-+>|=>/.test(v))e.target.value=v.replace(/-+>|=>/g,"→");
+});
+$("#ac-arrow").addEventListener("click",function(){
+  var i=aLast; if(!i||i.readOnly||!i.closest("#ac-grid"))return;
+  i.value="→"; i.focus();
+});
 function acNew(){
   var on=$$("#ac-filters input[data-g]").filter(function(i){return i.checked}).map(function(i){return i.dataset.g});
   if(!on.length)on=["pos","comp","sup"];
@@ -1624,10 +1642,13 @@ $("#ac-check").addEventListener("click",function(){
   var strict=aStrict(), right=0, asked=0;
   $$("#ac-grid input[data-n]").forEach(function(inp){
     var n=inp.dataset.n, c=inp.dataset.c, g=inp.dataset.g, forms=aForms(acCur,n,c,g);
-    var ok=forms.some(function(f){return norm(f,strict)===norm(inp.value,strict)}) && !!inp.value.trim();
+    // an arrow means "same as the cell to my left", within the same number
+    var arrowOK = g!=="m" && aForm(acCur,n,c,GENS[GENS.indexOf(g)-1])===forms[0];
+    var ok = isArrow(inp.value) ? arrowOK
+      : (forms.some(function(f){return norm(f,strict)===norm(inp.value,strict)}) && !!inp.value.trim());
     inp.classList.toggle("ok",ok); inp.classList.toggle("bad",!ok);
     var sol=$('[data-sol="'+n+c+g+'"]');
-    sol.textContent = ok ? "✓" : forms.join(" / ");
+    sol.textContent = ok ? "✓" : (arrowOK?"→ ":"")+forms.join(" / ");
     sol.style.color = ok ? "var(--ok)" : "var(--bad)";
     asked++;
     if(ok)right++; else S.amisses[[acCur.cls,n,c,g].join("|")]=(S.amisses[[acCur.cls,n,c,g].join("|")]||0)+1;
