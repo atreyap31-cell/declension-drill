@@ -559,6 +559,7 @@ input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 
     <button role="tab" data-m="charts" aria-selected="false">Charts</button>
     <button role="tab" data-m="drill" aria-selected="false">Ending drill</button>
     <button role="tab" data-m="decline" aria-selected="false">Decline</button>
+    <button role="tab" data-m="test" aria-selected="false">Practice test</button>
     <button role="tab" data-m="degrees" aria-selected="false">Degrees</button>
     <button role="tab" data-m="decode" aria-selected="false">Decoder</button>
   </div>
@@ -711,11 +712,30 @@ input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 
         <span class="tiny" id="ac-score"></span>
       </div>
       <p class="tiny">Same form as the cell just to its left, in the same number? Draw an arrow like on the test:
-        type <b>-&gt;</b> or press <button class="btn" type="button" id="ac-arrow" style="padding:2px 10px">&rarr;</button>.</p>
+        type <b>-&gt;</b> or press <button class="btn" type="button" data-arrow style="padding:2px 10px">&rarr;</button>.</p>
       <div class="tablewrap" style="border:0">
         <table class="declgrid adjgrid" id="ac-grid"></table>
       </div>
     </div>
+  </div>
+
+  <!-- practice test -->
+  <div class="a-pane hidden" data-pane="test">
+    <div class="spread">
+      <div class="stack-sm">
+        <h2 style="font-size:20px;font-weight:600">Practice test</h2>
+        <p class="tiny" style="max-width:62ch">Four charts: one positive, one comparative, one superlative and one
+          irregular, in random order. Mark each one&rsquo;s degree and fill the whole chart, nominative included.
+          Arrows count when the form is the same as the cell to its left in the same number (type <b>-&gt;</b> or
+          press <button class="btn" type="button" data-arrow style="padding:2px 10px">&rarr;</button>).</p>
+      </div>
+      <div class="row">
+        <button class="btn" id="at-new">New test</button>
+        <button class="btn primary" id="at-submit">Submit test</button>
+      </div>
+    </div>
+    <div class="stack" id="at-host" style="gap:18px"></div>
+    <div class="verdict hidden" id="at-result"></div>
   </div>
 
   <!-- degrees -->
@@ -1568,12 +1588,21 @@ var ADJS=[
  {entry:"ingēns, ingentis",gloss:"huge",cls:"a3",deg:"pos",stem:"ingent",nom:["ingēns","ingēns","ingēns"]},
  {entry:"longior, longius",gloss:"longer",cls:"acmp",deg:"comp",stem:"long",nom:["longior","longior","longius"]},
  {entry:"fortior, fortius",gloss:"braver",cls:"acmp",deg:"comp",stem:"fort",nom:["fortior","fortior","fortius"]},
- {entry:"melior, melius",gloss:"better",cls:"acmp",deg:"comp",stem:"mel",nom:["melior","melior","melius"]},
- {entry:"maior, maius",gloss:"bigger, greater",cls:"acmp",deg:"comp",stem:"ma",nom:["maior","maior","maius"]},
+ {entry:"laetior, laetius",gloss:"happier",cls:"acmp",deg:"comp",stem:"laet",nom:["laetior","laetior","laetius"]},
+ {entry:"ācrior, ācrius",gloss:"sharper, fiercer",cls:"acmp",deg:"comp",stem:"ācr",nom:["ācrior","ācrior","ācrius"]},
+ {entry:"fēlīcior, fēlīcius",gloss:"luckier",cls:"acmp",deg:"comp",stem:"fēlīc",nom:["fēlīcior","fēlīcior","fēlīcius"]},
  {entry:"longissimus, longissima, longissimum",gloss:"longest, very long",cls:"a12",deg:"sup",stem:"longissim",nom:["longissimus","longissima","longissimum"]},
- {entry:"optimus, optima, optimum",gloss:"best",cls:"a12",deg:"sup",stem:"optim",nom:["optimus","optima","optimum"]},
+ {entry:"fortissimus, fortissima, fortissimum",gloss:"bravest, very brave",cls:"a12",deg:"sup",stem:"fortissim",nom:["fortissimus","fortissima","fortissimum"]},
+ {entry:"laetissimus, laetissima, laetissimum",gloss:"happiest, very happy",cls:"a12",deg:"sup",stem:"laetissim",nom:["laetissimus","laetissima","laetissimum"]},
  {entry:"pulcherrimus, pulcherrima, pulcherrimum",gloss:"most beautiful",cls:"a12",deg:"sup",stem:"pulcherrim",nom:["pulcherrimus","pulcherrima","pulcherrimum"]},
- {entry:"facillimus, facillima, facillimum",gloss:"easiest, very easy",cls:"a12",deg:"sup",stem:"facillim",nom:["facillimus","facillima","facillimum"]}
+ {entry:"facillimus, facillima, facillimum",gloss:"easiest, very easy",cls:"a12",deg:"sup",stem:"facillim",nom:["facillimus","facillima","facillimum"]},
+ {entry:"melior, melius",gloss:"better (from bonus)",cls:"acmp",deg:"comp",stem:"mel",irr:true,nom:["melior","melior","melius"]},
+ {entry:"peior, peius",gloss:"worse (from malus)",cls:"acmp",deg:"comp",stem:"pe",irr:true,nom:["peior","peior","peius"]},
+ {entry:"maior, maius",gloss:"bigger, greater (from magnus)",cls:"acmp",deg:"comp",stem:"ma",irr:true,nom:["maior","maior","maius"]},
+ {entry:"optimus, optima, optimum",gloss:"best (from bonus)",cls:"a12",deg:"sup",stem:"optim",irr:true,nom:["optimus","optima","optimum"]},
+ {entry:"pessimus, pessima, pessimum",gloss:"worst (from malus)",cls:"a12",deg:"sup",stem:"pessim",irr:true,nom:["pessimus","pessima","pessimum"]},
+ {entry:"maximus, maxima, maximum",gloss:"biggest, greatest (from magnus)",cls:"a12",deg:"sup",stem:"maxim",irr:true,nom:["maximus","maxima","maximum"]},
+ {entry:"minimus, minima, minimum",gloss:"smallest (from parvus)",cls:"a12",deg:"sup",stem:"minim",irr:true,nom:["minimus","minima","minimum"]}
 ];
 function aForm(it,n,c,g){
   var gi=GENS.indexOf(g);
@@ -1588,14 +1617,9 @@ function aForms(it,n,c,g){
   if(it.cls==="a3"&&n==="pl"&&c==="acc"&&g!=="n")f.push(it.stem+"īs");
   return f;
 }
-var acCur=null;
-function acRender(){
-  var it=acCur, p=A[it.cls];
-  $("#ac-entry").textContent=it.entry;
-  $("#ac-meta").innerHTML='<span class="chip '+p.col+'">'+p.short+'</span> &nbsp;'+ADEG[it.deg]+
-    ' &nbsp;·&nbsp; '+esc(it.gloss)+' &nbsp;·&nbsp; stem <b class="lat">'+it.stem+'-</b>';
-  $("#ac-score").textContent="";
-  // laid out like the paper chart: cases down the side, M F N singular | M F N plural across
+// laid out like the paper chart: cases down the side, M F N singular | M F N plural across.
+// giveNom: show the nominative singulars as given, read-only cells.
+function aGridHTML(it,giveNom){
   function blk(n,g){return n==="pl"&&g==="m"?" blk":""}
   var h='<thead><tr><th class="case"></th>'+
     '<th class="case" colspan="3" style="width:auto;text-align:center">Singular</th>'+
@@ -1608,7 +1632,7 @@ function acRender(){
     ["sg","pl"].forEach(function(n){
       GENS.forEach(function(g,gi){
         h+='<td class="'+blk(n,g).trim()+'">';
-        if(n==="sg"&&c==="nom"){
+        if(giveNom&&n==="sg"&&c==="nom"){
           var shown=(gi>0&&it.nom[gi]===it.nom[gi-1])?"→":it.nom[gi];
           h+='<input type="text" class="given" value="'+shown+'" readonly aria-label="given form">';
         }
@@ -1619,16 +1643,52 @@ function acRender(){
     });
     h+='</tr>';
   });
-  $("#ac-grid").innerHTML=h+'</tbody>';
+  return h+'</tbody>';
 }
 function isArrow(v){return /^\s*(→|⟶|->|-->|=>|>)\s*$/.test(v)}
-$("#ac-grid").addEventListener("input",function(e){
+// marks every input in one chart; an arrow means "same as the cell to my left", within the same number
+function aGrade(table,it){
+  var strict=aStrict(), right=0, asked=0;
+  Array.prototype.forEach.call(table.querySelectorAll("input[data-n]"),function(inp){
+    var n=inp.dataset.n, c=inp.dataset.c, g=inp.dataset.g, forms=aForms(it,n,c,g);
+    var arrowOK = g!=="m" && aForm(it,n,c,GENS[GENS.indexOf(g)-1])===forms[0];
+    var ok = isArrow(inp.value) ? arrowOK
+      : (forms.some(function(f){return norm(f,strict)===norm(inp.value,strict)}) && !!inp.value.trim());
+    inp.classList.toggle("ok",ok); inp.classList.toggle("bad",!ok);
+    var sol=table.querySelector('[data-sol="'+n+c+g+'"]');
+    sol.textContent = ok ? "✓" : (arrowOK?"→ ":"")+forms.join(" / ");
+    sol.style.color = ok ? "var(--ok)" : "var(--bad)";
+    asked++;
+    if(ok)right++; else S.amisses[[it.cls,n,c,g].join("|")]=(S.amisses[[it.cls,n,c,g].join("|")]||0)+1;
+  });
+  return {right:right,asked:asked};
+}
+function aScore(right,asked){
+  S.total+=asked; S.right+=right;
+  S.streak = (right===asked && asked>0) ? S.streak+1 : 0;
+  if(S.streak>S.best)S.best=S.streak;
+  paint(); save(); aRenderMisses();
+}
+$("#v-adj").addEventListener("input",function(e){
+  if(!e.target.closest(".adjgrid"))return;
   var v=e.target.value; if(/-+>|=>/.test(v))e.target.value=v.replace(/-+>|=>/g,"→");
 });
-$("#ac-arrow").addEventListener("click",function(){
-  var i=aLast; if(!i||i.readOnly||!i.closest("#ac-grid"))return;
-  i.value="→"; i.focus();
+$$("[data-arrow]").forEach(function(b){
+  b.addEventListener("click",function(){
+    var i=aLast; if(!i||i.readOnly||!i.closest(".adjgrid")||!i.offsetParent)return;
+    i.value="→"; i.focus();
+  });
 });
+
+var acCur=null;
+function acRender(){
+  var it=acCur, p=A[it.cls];
+  $("#ac-entry").textContent=it.entry;
+  $("#ac-meta").innerHTML='<span class="chip '+p.col+'">'+p.short+'</span> &nbsp;'+ADEG[it.deg]+
+    ' &nbsp;·&nbsp; '+esc(it.gloss)+' &nbsp;·&nbsp; stem <b class="lat">'+it.stem+'-</b>';
+  $("#ac-score").textContent="";
+  $("#ac-grid").innerHTML=aGridHTML(it,true);
+}
 function acNew(){
   var on=$$("#ac-filters input[data-g]").filter(function(i){return i.checked}).map(function(i){return i.dataset.g});
   if(!on.length)on=["pos","comp","sup"];
@@ -1639,26 +1699,62 @@ function acNew(){
 $("#ac-new").addEventListener("click",acNew);
 $("#ac-filters").addEventListener("change",acNew);
 $("#ac-check").addEventListener("click",function(){
-  var strict=aStrict(), right=0, asked=0;
-  $$("#ac-grid input[data-n]").forEach(function(inp){
-    var n=inp.dataset.n, c=inp.dataset.c, g=inp.dataset.g, forms=aForms(acCur,n,c,g);
-    // an arrow means "same as the cell to my left", within the same number
-    var arrowOK = g!=="m" && aForm(acCur,n,c,GENS[GENS.indexOf(g)-1])===forms[0];
-    var ok = isArrow(inp.value) ? arrowOK
-      : (forms.some(function(f){return norm(f,strict)===norm(inp.value,strict)}) && !!inp.value.trim());
-    inp.classList.toggle("ok",ok); inp.classList.toggle("bad",!ok);
-    var sol=$('[data-sol="'+n+c+g+'"]');
-    sol.textContent = ok ? "✓" : (arrowOK?"→ ":"")+forms.join(" / ");
-    sol.style.color = ok ? "var(--ok)" : "var(--bad)";
-    asked++;
-    if(ok)right++; else S.amisses[[acCur.cls,n,c,g].join("|")]=(S.amisses[[acCur.cls,n,c,g].join("|")]||0)+1;
+  var r=aGrade($("#ac-grid"),acCur);
+  aScore(r.right,r.asked);
+  $("#ac-score").textContent=r.right+" of "+r.asked+" correct";
+  $("#ac-score").style.color = (r.right===r.asked&&r.asked>0) ? "var(--ok)" : "var(--ink-2)";
+});
+
+/* practice test: four charts, one positive, one comparative, one superlative, one irregular */
+var atItems=[], atDone=false;
+function atNew(){
+  var reg=ADJS.filter(function(x){return !x.irr});
+  atItems=[
+    pick(reg.filter(function(x){return x.deg==="pos"})),
+    pick(reg.filter(function(x){return x.deg==="comp"})),
+    pick(reg.filter(function(x){return x.deg==="sup"})),
+    pick(ADJS.filter(function(x){return x.irr}))
+  ];
+  for(var i=atItems.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=atItems[i];atItems[i]=atItems[j];atItems[j]=t;}
+  atDone=false;
+  $("#at-host").innerHTML=atItems.map(function(it,k){
+    return '<div class="panel stack" data-k="'+k+'">'+
+      '<div class="spread"><div class="stack-sm"><div class="lat" style="font-size:22px;font-weight:600">'+
+      (k+1)+'. '+esc(it.entry)+'</div><div class="tiny">'+esc(it.gloss)+'</div></div>'+
+      '<div class="row"><span class="tiny">Degree</span><div class="seg" role="radiogroup">'+
+      ["pos","comp","sup"].map(function(d){
+        return '<button type="button" role="radio" data-d="'+d+'" aria-selected="false">'+ADEG[d]+'</button>';
+      }).join("")+'</div><span class="tiny" data-mark></span></div></div>'+
+      '<div class="tablewrap" style="border:0"><table class="declgrid adjgrid">'+aGridHTML(it,false)+'</table></div>'+
+      '</div>';
+  }).join("");
+  $("#at-result").classList.add("hidden");
+  $("#at-submit").disabled=false;
+}
+$("#at-host").addEventListener("click",function(e){
+  var b=e.target.closest(".seg button[data-d]"); if(!b||atDone)return;
+  Array.prototype.forEach.call(b.parentNode.children,function(x){x.setAttribute("aria-selected",String(x===b));});
+});
+$("#at-new").addEventListener("click",atNew);
+$("#at-submit").addEventListener("click",function(){
+  if(atDone)return;
+  atDone=true; $("#at-submit").disabled=true;
+  var right=0, asked=0, degR=0;
+  $$("#at-host .panel").forEach(function(pn){
+    var it=atItems[+pn.dataset.k], r=aGrade(pn.querySelector("table"),it);
+    var sel=pn.querySelector('.seg button[aria-selected="true"]'), dOk=!!sel&&sel.dataset.d===it.deg;
+    right+=r.right; asked+=r.asked; if(dOk)degR++;
+    var m=pn.querySelector("[data-mark]");
+    m.textContent=(dOk?"✓ ":"✗ "+ADEG[it.deg]+" · ")+r.right+" / "+r.asked;
+    m.style.color=(dOk&&r.right===r.asked)?"var(--ok)":"var(--bad)";
   });
-  S.total+=asked; S.right+=right;
-  S.streak = (right===asked && asked>0) ? S.streak+1 : 0;
-  if(S.streak>S.best)S.best=S.streak;
-  paint(); save(); aRenderMisses();
-  $("#ac-score").textContent=right+" of "+asked+" correct";
-  $("#ac-score").style.color = (right===asked&&asked>0) ? "var(--ok)" : "var(--ink-2)";
+  aScore(right+degR,asked+atItems.length);
+  var pct=Math.round(100*(right+degR)/(asked+atItems.length));
+  var v=$("#at-result");
+  v.className="verdict "+(pct>=90?"ok":"bad");
+  v.innerHTML='<span class="mark">'+pct+'%</span><div><b>'+right+' of '+asked+' cells, '+degR+' of 4 degrees</b>'+
+    '<span class="note">Corrections are under each wrong cell. A → in a correction means an arrow would have counted there.</span></div>';
+  v.classList.remove("hidden");
 });
 
 /* degrees */
@@ -1770,7 +1866,7 @@ $("#ae-reveal").addEventListener("click",function(){ aeShown=!aeShown; aeRender(
 
 /* ---------- init ---------- */
 drNew(); decRender(); ntNew(); renderMisses(); paint();
-aqNew(); adNew(); acNew(); agNew(); aeRender(); aRenderMisses();
+aqNew(); adNew(); acNew(); atNew(); agNew(); aeRender(); aRenderMisses();
 
 function boot(st){
   if(st&&st.view){

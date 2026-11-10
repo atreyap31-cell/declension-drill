@@ -14,7 +14,7 @@ A study guide and quiz for Latin noun paradigms, declensions 1–3, and adjectiv
 | **Ending Drill** | Typed recall of individual endings, filterable by paradigm, with optional macron enforcement. |
 | **Decline a Noun** | Fill a full twelve-cell paradigm for a real word. |
 | **Decoder** | Reverse lookup: given an ending, every case it could be. |
-| **Adjectives** | The same toolkit for adjectives: identify the pattern or degree, 1st/2nd, 3rd and comparative charts, an ending drill, full M./F./N. declension of positive, comparative and superlative adjectives, a degrees drill (regular, `-er`, `-lis`, irregular), and an adjective ending decoder. |
+| **Adjectives** | The same toolkit for adjectives: identify the pattern or degree, 1st/2nd, 3rd and comparative charts, an ending drill, full M./F./N. declension of positive, comparative and superlative adjectives laid out like the paper chart (arrows allowed for repeated forms), a four-chart practice test (one positive, comparative, superlative and irregular), a degrees drill (regular, `-er`, `-lis`, irregular), and an adjective ending decoder. |
 
 Score and a running list of missed cells are kept in `localStorage`, so progress persists per browser.
 
