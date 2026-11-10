@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Declension Drill</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -210,6 +211,13 @@ input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 
 .sent b{font-weight:700; color:var(--cn); box-shadow:inset 0 -2px 0 var(--cn)}
 .gloss{font-family:Archivo,sans-serif; font-size:13.5px; color:var(--ink-3); font-style:italic}
 .famtable td:first-child{font-family:Spectral,serif; font-size:16px; font-weight:600; white-space:nowrap}
+
+/* adjectives module */
+.adjgrid td{vertical-align:top}
+.adjgrid input[type="text"]{min-width:92px}
+.adjgrid .solution{display:block; font-size:13.5px; min-height:1.35em; margin-top:3px}
+.a-pane{display:flex; flex-direction:column; gap:26px}
+.keys .btn{font-family:Spectral,serif; padding:4px 11px}
 @media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
 @media (max-width:560px){
   .top-in{align-items:flex-start}
@@ -239,6 +247,7 @@ input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 
     <button role="tab" data-view="drill" aria-selected="false">Ending Drill</button>
     <button role="tab" data-view="decline" aria-selected="false">Decline a Noun</button>
     <button role="tab" data-view="decode" aria-selected="false">Decoder</button>
+    <button role="tab" data-view="adj" aria-selected="false">Adjectives</button>
   </nav>
 </header>
 
@@ -520,6 +529,263 @@ input[type="text"]:focus{outline:none; border-color:var(--accent); box-shadow:0 
     <p style="font-size:14px"><b class="lat">-a</b> vs <b class="lat">-ā</b> &mdash; short <span class="lat">-a</span> is 1st nom./voc. sg., <em>or</em> any neuter nom./acc./voc. plural. Long <span class="lat">-ā</span> is 1st abl. sg. and nothing else. If your text prints macrons this is free; if it doesn't, let the verb and any preposition decide.</p>
     <p style="font-size:14px"><b class="lat">-is</b> vs <b class="lat">-īs</b> &mdash; short <span class="lat">-is</span> is 3rd gen. <em>singular</em> ("of the &hellip;"). Long <span class="lat">-īs</span> is 1st/2nd dat. or abl. <em>plural</em>. Opposite number, opposite job, one macron apart.</p>
     <p style="font-size:14px"><b class="lat">-um</b> &mdash; 2nd acc. sg. masculine, or 2nd neuter nom./acc./voc. sg., or 3rd gen. plural. If the sentence already has a direct object, suspect the genitive plural.</p>
+  </div>
+</section>
+
+<!-- ============ ADJECTIVES ============ -->
+<section class="view" id="v-adj">
+  <div class="spread">
+    <div class="stack-sm">
+      <p class="eyebrow">Adjectives</p>
+      <h2 style="font-size:24px;font-weight:700">Adjectives &amp; degrees</h2>
+    </div>
+    <div class="row keys">
+      <span class="tiny">Macron keys</span>
+      <button class="btn" type="button" data-ains="&#257;">&#257;</button>
+      <button class="btn" type="button" data-ains="&#275;">&#275;</button>
+      <button class="btn" type="button" data-ains="&#299;">&#299;</button>
+      <button class="btn" type="button" data-ains="&#333;">&#333;</button>
+      <button class="btn" type="button" data-ains="&#363;">&#363;</button>
+      <label class="toggle"><input type="checkbox" id="a-strict"> Require macrons</label>
+    </div>
+  </div>
+  <p class="lede">Adjectives use the noun endings you already know: 1st/2nd-declension adjectives decline like
+    <span class="lat">puella</span>, <span class="lat">servus</span> and <span class="lat">bellum</span>,
+    3rd-declension ones like an i-stem. The new work is agreement and the three degrees.</p>
+
+  <div class="seg" id="a-modes" role="tablist">
+    <button role="tab" data-m="identify" aria-selected="true">Identify</button>
+    <button role="tab" data-m="charts" aria-selected="false">Charts</button>
+    <button role="tab" data-m="drill" aria-selected="false">Ending drill</button>
+    <button role="tab" data-m="decline" aria-selected="false">Decline</button>
+    <button role="tab" data-m="degrees" aria-selected="false">Degrees</button>
+    <button role="tab" data-m="decode" aria-selected="false">Decoder</button>
+  </div>
+
+  <!-- identify -->
+  <div class="a-pane" data-pane="identify">
+    <div class="panel stack">
+      <h2>Four rules for adjectives</h2>
+      <ol class="rules">
+        <li><span class="num">1</span><div>
+          <b>An adjective agrees with its noun in gender, number and case. Not in declension.</b>
+          <div class="why"><span class="lat">nauta bonus</span>, <span class="lat">agricolae laetī</span>: 1st-declension nouns with 2nd-declension masculine adjectives, because sailors and farmers are masculine. When the endings happen to match, that is a coincidence, not the rule.</div>
+        </div></li>
+        <li><span class="num">2</span><div>
+          <b>The dictionary entry tells you the pattern.</b>
+          <div class="why">Three forms in <span class="lat">-us, -a, -um</span> (or <span class="lat">-er, -(e)ra, -(e)rum</span>) &rarr; 1st/2nd declension. Anything else &rarr; 3rd. Count the nominatives to tell which kind of 3rd: <span class="lat">ācer, ācris, ācre</span> (three), <span class="lat">omnis, omne</span> (two), <span class="lat">fēlīx, fēlīcis</span> (one, then the genitive).</div>
+        </div></li>
+        <li><span class="num">3</span><div>
+          <b>3rd-declension adjectives are i-stems. Comparatives are not.</b>
+          <div class="why">Positive 3rd-declension adjectives take abl. sg. <b class="lat">-ī</b>, gen. pl. <b class="lat">-ium</b>, neut. pl. <b class="lat">-ia</b> (<span class="lat">omnī, omnium, omnia</span>). Comparatives flip all three: <b class="lat">-e</b>, <b class="lat">-um</b>, <b class="lat">-a</b> (<span class="lat">longiōre, longiōrum, longiōra</span>).</div>
+        </div></li>
+        <li><span class="num">4</span><div>
+          <b>Degrees are built on the genitive stem.</b>
+          <div class="why"><span class="lat">fēlīx, fēlīc-is</span> &rarr; <span class="lat">fēlīc-ior</span>, <span class="lat">fēlīc-issimus</span>. The comparative is <b class="lat">-ior</b> (m./f.) and <b class="lat">-ius</b> (n.), declined 3rd. The superlative is <b class="lat">-issimus, -a, -um</b>, declined like <span class="lat">bonus</span>.</div>
+        </div></li>
+      </ol>
+    </div>
+
+    <div class="grid2">
+      <div class="panel stack-sm">
+        <h3>Reading the entry</h3>
+        <div class="tablewrap" style="border:0">
+          <table class="famtable">
+            <thead><tr><th class="case" style="width:auto">Entry</th><th class="case" style="width:auto">Pattern</th><th class="case">Stem</th></tr></thead>
+            <tbody>
+              <tr><td>bonus, bona, bonum</td><td>1st/2nd</td><td class="lat">bon-</td></tr>
+              <tr><td>miser, misera, miserum</td><td>1st/2nd, e stays</td><td class="lat">miser-</td></tr>
+              <tr><td>pulcher, pulchra, pulchrum</td><td>1st/2nd, e drops</td><td class="lat">pulchr-</td></tr>
+              <tr><td>ācer, ācris, ācre</td><td>3rd &middot; three endings</td><td class="lat">ācr-</td></tr>
+              <tr><td>omnis, omne</td><td>3rd &middot; two endings</td><td class="lat">omn-</td></tr>
+              <tr><td>fēlīx, fēlīcis</td><td>3rd &middot; one ending</td><td class="lat">fēlīc-</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel stack-sm">
+        <h3>Degrees at a glance</h3>
+        <div class="tablewrap" style="border:0">
+          <table class="famtable">
+            <thead><tr><th class="case" style="width:auto">Positive</th><th class="case" style="width:auto">Comparative</th><th class="case" style="width:auto">Superlative</th></tr></thead>
+            <tbody>
+              <tr><td>longus</td><td class="lat">longior, longius</td><td class="lat">longissimus</td></tr>
+              <tr><td>pulcher</td><td class="lat">pulchrior</td><td class="lat">pulcherrimus</td></tr>
+              <tr><td>facilis</td><td class="lat">facilior</td><td class="lat">facillimus</td></tr>
+              <tr><td>bonus</td><td class="lat">melior</td><td class="lat">optimus</td></tr>
+              <tr><td>magnus</td><td class="lat">maior</td><td class="lat">maximus</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tiny"><span class="lat">quam</span> + comparative = &ldquo;than&rdquo;. <span class="lat">quam</span> + superlative = &ldquo;as &hellip; as possible&rdquo;.</p>
+      </div>
+    </div>
+
+    <div class="panel stack">
+      <div class="spread">
+        <h2>Quick-fire: pattern or degree</h2>
+        <span class="tiny" id="aq-tally">0 / 0</span>
+      </div>
+      <p class="tiny" id="aq-q"></p>
+      <div class="prompt" style="align-items:flex-start;text-align:left;gap:4px">
+        <div class="ask lat" id="aq-entry" style="font-size:clamp(22px,4.5vw,30px)"></div>
+        <div class="sub" id="aq-gloss"></div>
+      </div>
+      <div class="opts" id="aq-opts"></div>
+      <div class="verdict hidden" id="aq-verdict"></div>
+      <div class="row"><button class="btn primary" id="aq-next">Next</button></div>
+    </div>
+  </div>
+
+  <!-- charts -->
+  <div class="a-pane hidden" data-pane="charts">
+    <div class="spread">
+      <p class="tiny">Model words: <span class="lat">bonus, bona, bonum</span> &middot; <span class="lat">omnis, omne</span> &middot; <span class="lat">longior, longius</span></p>
+      <label class="toggle"><input type="checkbox" id="a-hide"> Cover endings (hover a cell to peek)</label>
+    </div>
+    <div class="cards3" id="a-chart-host"></div>
+    <div class="panel stack">
+      <h2>Read the shortcuts off the chart</h2>
+      <div class="grid2">
+        <div class="stack-sm">
+          <p style="font-size:14px"><span class="chip c2">1st/2nd</span> Nothing new. Masculine is <span class="lat">servus</span>, feminine is <span class="lat">puella</span>, neuter is <span class="lat">bellum</span>. If you know the noun charts, you know this one.</p>
+          <p style="font-size:14px"><span class="chip c3">3rd</span> One set of endings for M. and F. The neuter differs only where the Neuter Law says it must (nom./acc./voc.). Watch the i-stem trio <span class="lat">-ī, -ium, -ia</span>.</p>
+        </div>
+        <div class="stack-sm">
+          <p style="font-size:14px"><span class="chip c1">Comp.</span> <span class="lat">-iōr-</span> runs through every case except the nominative singular. Neuter singular <span class="lat">-ius</span> looks like 2nd-declension <span class="lat">-us</span>, but it isn&rsquo;t.</p>
+          <p style="font-size:14px"><span class="chip c2">Superl.</span> Not charted separately: <span class="lat">-issimus, -a, -um</span> declines exactly like <span class="lat">bonus</span>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ending drill -->
+  <div class="a-pane hidden" data-pane="drill">
+    <div class="spread">
+      <div class="filters" id="ad-filters">
+        <label class="toggle"><input type="checkbox" data-p="a12" checked> 1st/2nd</label>
+        <label class="toggle"><input type="checkbox" data-p="a3" checked> 3rd</label>
+        <label class="toggle"><input type="checkbox" data-p="acmp" checked> Comparative</label>
+      </div>
+      <div class="streakdots" id="ad-dots" aria-label="recent answers"></div>
+    </div>
+    <div class="stage">
+      <div class="prompt">
+        <div class="sub" id="ad-tag"></div>
+        <div class="ask" id="ad-ask"></div>
+        <div class="sub" id="ad-sub"></div>
+      </div>
+      <form class="answer" id="ad-form" autocomplete="off">
+        <input type="text" id="ad-input" placeholder="-am" aria-label="Your answer" spellcheck="false">
+        <button class="btn primary" type="submit" id="ad-submit">Check</button>
+        <button class="btn ghost" type="button" id="ad-skip">Show me</button>
+      </form>
+      <div class="verdict hidden" id="ad-verdict"></div>
+    </div>
+    <div class="panel stack-sm">
+      <h3>Adjective cells you keep missing</h3>
+      <p class="tiny" id="a-misslist">Nothing yet. Keep going.</p>
+    </div>
+  </div>
+
+  <!-- decline -->
+  <div class="a-pane hidden" data-pane="decline">
+    <div class="spread">
+      <div class="filters" id="ac-filters">
+        <label class="toggle"><input type="checkbox" data-g="pos" checked> Positive</label>
+        <label class="toggle"><input type="checkbox" data-g="comp" checked> Comparative</label>
+        <label class="toggle"><input type="checkbox" data-g="sup" checked> Superlative</label>
+      </div>
+      <div class="row">
+        <button class="btn" id="ac-new">New adjective</button>
+        <button class="btn primary" id="ac-check">Check all</button>
+      </div>
+    </div>
+    <div class="panel stack">
+      <div class="spread">
+        <div class="stack-sm">
+          <div class="lat" id="ac-entry" style="font-size:26px;font-weight:600"></div>
+          <div class="tiny" id="ac-meta"></div>
+        </div>
+        <span class="tiny" id="ac-score"></span>
+      </div>
+      <div class="tablewrap" style="border:0">
+        <table class="declgrid adjgrid" id="ac-grid"></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- degrees -->
+  <div class="a-pane hidden" data-pane="degrees">
+    <div class="filters" id="ag-filters">
+      <label class="toggle"><input type="checkbox" data-r="reg" checked> Regular</label>
+      <label class="toggle"><input type="checkbox" data-r="er" checked> -er</label>
+      <label class="toggle"><input type="checkbox" data-r="lis" checked> -lis</label>
+      <label class="toggle"><input type="checkbox" data-r="irr" checked> Irregular</label>
+    </div>
+    <div class="stage">
+      <div class="prompt">
+        <div class="sub" id="ag-tag"></div>
+        <div class="ask lat" id="ag-ask"></div>
+        <div class="gloss" id="ag-gloss"></div>
+        <div class="sub" id="ag-sub" style="margin-top:8px"></div>
+      </div>
+      <form class="answer" id="ag-form" autocomplete="off">
+        <input type="text" id="ag-input" aria-label="Your answer" spellcheck="false">
+        <button class="btn primary" type="submit" id="ag-submit">Check</button>
+        <button class="btn ghost" type="button" id="ag-skip">Show me</button>
+      </form>
+      <div class="verdict hidden" id="ag-verdict"></div>
+    </div>
+    <div class="grid2">
+      <div class="panel stack-sm">
+        <h3>Building the degrees</h3>
+        <ol class="rules" style="margin-top:2px">
+          <li><span class="num">1</span><div><b>Regular: genitive stem + -ior / -issimus.</b>
+            <div class="why"><span class="lat">fortis &rarr; fortior &rarr; fortissimus</span></div></div></li>
+          <li><span class="num">2</span><div><b>-er adjectives: superlative is the nominative + -rimus.</b>
+            <div class="why"><span class="lat">pulcher &rarr; pulcherrimus</span>, <span class="lat">ācer &rarr; ācerrimus</span>. The comparative stays regular on the stem: <span class="lat">pulchrior, ācrior</span>.</div></div></li>
+          <li><span class="num">3</span><div><b>Six -lis adjectives take -limus.</b>
+            <div class="why"><span class="lat">facilis, difficilis, similis, dissimilis, gracilis, humilis</span> &rarr; <span class="lat">facillimus</span>. Other -lis words are regular: <span class="lat">ūtilis &rarr; ūtilissimus</span>.</div></div></li>
+        </ol>
+      </div>
+      <div class="panel stack-sm">
+        <h3>Irregulars to memorise</h3>
+        <div class="tablewrap" style="border:0">
+          <table class="famtable">
+            <thead><tr><th class="case" style="width:auto">Positive</th><th class="case" style="width:auto">Comparative</th><th class="case" style="width:auto">Superlative</th></tr></thead>
+            <tbody>
+              <tr><td>bonus</td><td class="lat">melior, melius</td><td class="lat">optimus</td></tr>
+              <tr><td>malus</td><td class="lat">peior, peius</td><td class="lat">pessimus</td></tr>
+              <tr><td>magnus</td><td class="lat">maior, maius</td><td class="lat">maximus</td></tr>
+              <tr><td>parvus</td><td class="lat">minor, minus</td><td class="lat">minimus</td></tr>
+              <tr><td>multus</td><td class="lat">plūs</td><td class="lat">plūrimus</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- decoder -->
+  <div class="a-pane hidden" data-pane="decode">
+    <div class="panel stack">
+      <div class="endgrid" id="ae-buttons"></div>
+      <div class="spread" style="border-top:1px solid var(--line);padding-top:16px">
+        <div class="stack-sm">
+          <div class="bigend lat" id="ae-big"></div>
+          <div class="countline" id="ae-count"></div>
+        </div>
+        <button class="btn primary" id="ae-reveal">Reveal</button>
+      </div>
+      <div class="parselist" id="ae-list"></div>
+    </div>
+    <div class="panel stack-sm">
+      <h3>Adjective endings that fool you</h3>
+      <p style="font-size:14px"><b class="lat">-is</b> vs <b class="lat">-īs</b> &mdash; short <span class="lat">-is</span> is 3rd nom./voc. sg. (<span class="lat">omnis</span>) or 3rd gen. sg. Long <span class="lat">-īs</span> is 1st/2nd dat./abl. plural, or a 3rd-declension acc. plural.</p>
+      <p style="font-size:14px"><b class="lat">-ius</b> &mdash; comparative neuter nom./acc. sg. (<span class="lat">longius</span>). It is never a 2nd-declension ending.</p>
+      <p style="font-size:14px"><b class="lat">-ī</b> &mdash; 1st/2nd gen. sg. or nom. pl. masculine, or 3rd dat. and abl. sg. in every gender.</p>
+    </div>
   </div>
 </section>
 
@@ -1059,8 +1325,433 @@ $("#nt-skip").addEventListener("click",function(){
 });
 $("#nt-next").addEventListener("click",ntNew);
 
+/* ---------- adjectives ---------- */
+var GENS=["m","f","n"];
+var GL={m:"M.",f:"F.",n:"N."}, GFULL={m:"masculine",f:"feminine",n:"neuter"};
+function ac(e,alt,note){var o={e:e}; if(alt)o.alt=alt; if(note)o.note=note; return o;}
+function tri(m,f,n){
+  function c(x){return typeof x==="string"?ac(x):x}
+  return {m:c(m),f:c(f),n:c(n)};
+}
+var A={
+ a12:{short:"1st/2nd",col:"c2",model:"bonus, bona, bonum",
+  sg:{nom:tri(ac("-us",["-er"],"(-er)"),"-a","-um"),gen:tri("-ī","-ae","-ī"),dat:tri("-ō","-ae","-ō"),
+      acc:tri("-um","-am","-um"),abl:tri("-ō","-ā","-ō"),voc:tri(ac("-e",["-er"],"(-er)"),"-a","-um")},
+  pl:{nom:tri("-ī","-ae","-a"),gen:tri("-ōrum","-ārum","-ōrum"),dat:tri("-īs","-īs","-īs"),
+      acc:tri("-ōs","-ās","-a"),abl:tri("-īs","-īs","-īs"),voc:tri("-ī","-ae","-a")}},
+ a3:{short:"3rd",col:"c3",model:"omnis, omne",
+  sg:{nom:tri("-is","-is","-e"),gen:tri("-is","-is","-is"),dat:tri("-ī","-ī","-ī"),
+      acc:tri("-em","-em","-e"),abl:tri("-ī","-ī","-ī"),voc:tri("-is","-is","-e")},
+  pl:{nom:tri("-ēs","-ēs","-ia"),gen:tri("-ium","-ium","-ium"),dat:tri("-ibus","-ibus","-ibus"),
+      acc:tri(ac("-ēs",["-īs"],"(-īs)"),ac("-ēs",["-īs"],"(-īs)"),"-ia"),
+      abl:tri("-ibus","-ibus","-ibus"),voc:tri("-ēs","-ēs","-ia")}},
+ acmp:{short:"Comp.",col:"c1",model:"longior, longius",
+  sg:{nom:tri("-ior","-ior","-ius"),gen:tri("-iōris","-iōris","-iōris"),dat:tri("-iōrī","-iōrī","-iōrī"),
+      acc:tri("-iōrem","-iōrem","-ius"),abl:tri("-iōre","-iōre","-iōre"),voc:tri("-ior","-ior","-ius")},
+  pl:{nom:tri("-iōrēs","-iōrēs","-iōra"),gen:tri("-iōrum","-iōrum","-iōrum"),
+      dat:tri("-iōribus","-iōribus","-iōribus"),acc:tri("-iōrēs","-iōrēs","-iōra"),
+      abl:tri("-iōribus","-iōribus","-iōribus"),voc:tri("-iōrēs","-iōrēs","-iōra")}}
+};
+var AKEYS=["a12","a3","acmp"];
+// comparative endings are also accepted without the leading i (-ōris after longi-)
+["sg","pl"].forEach(function(n){CASES.forEach(function(c){GENS.forEach(function(g){
+  var cell=A.acmp[n][c][g]; cell.xalt=[cell.e.replace(/^-i/,"-")];
+});});});
+function aAccepts(cell,val,strict){
+  return accepts({e:cell.e,alt:(cell.alt||[]).concat(cell.xalt||[])},val,strict);
+}
+var ADEG={pos:"Positive",comp:"Comparative",sup:"Superlative"};
+function aStrict(){return $("#a-strict").checked}
+
+if(!S.amisses)S.amisses={};
+function aTick(ok,key){
+  S.total++;
+  if(ok){S.right++;S.streak++;if(S.streak>S.best)S.best=S.streak;}
+  else{S.streak=0; if(key)S.amisses[key]=(S.amisses[key]||0)+1;}
+  paint(); save(); aRenderMisses();
+}
+function aRenderMisses(){
+  var ks=Object.keys(S.amisses).sort(function(a,b){return S.amisses[b]-S.amisses[a]}).slice(0,10);
+  $("#a-misslist").innerHTML = ks.length ? ks.map(function(k){
+    var p=k.split("|"), d=A[p[0]]; if(!d)return "";
+    return '<span class="chip '+d.col+'" style="margin:2px 5px 2px 0">'+d.short+' · '+
+      CL[p[2]]+' '+p[1]+' '+GL[p[3]]+' ×'+S.amisses[k]+'</span>';
+  }).join("") : "Nothing yet. Keep going.";
+}
+
+/* modes */
+$("#a-modes").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-m]"); if(!b)return;
+  $$("#a-modes button").forEach(function(x){x.setAttribute("aria-selected",String(x===b));});
+  $$("#v-adj .a-pane").forEach(function(p){p.classList.toggle("hidden",p.dataset.pane!==b.dataset.m);});
+  var f={drill:"#ad-input",degrees:"#ag-input"}[b.dataset.m];
+  if(f)setTimeout(function(){if(!$(f).disabled)$(f).focus()},40);
+});
+
+/* macron keys: type into whichever adjective input was focused last */
+var aLast=null;
+$("#v-adj").addEventListener("focusin",function(e){
+  if(e.target.matches('input[type="text"]'))aLast=e.target;
+});
+$$("[data-ains]").forEach(function(b){
+  b.addEventListener("click",function(){
+    var i=aLast; if(!i||i.disabled||i.readOnly||!i.offsetParent)return;
+    i.value+=b.dataset.ains; i.focus();
+  });
+});
+
+/* charts */
+function aChart(k,title){
+  var p=A[k];
+  var h='<div class="tablewrap"><table><caption>'+title+'</caption>';
+  h+='<thead><tr><th class="numlab"></th><th class="case"></th>'+
+     GENS.map(function(g){return '<th class="case" style="text-align:center">'+GL[g]+'</th>'}).join("")+
+     '</tr></thead><tbody>';
+  ["sg","pl"].forEach(function(n){
+    CASES.forEach(function(c,ci){
+      h+='<tr'+(ci===0?' class="numstart"':'')+'>';
+      if(ci===0)h+='<th class="numlab" rowspan="6">'+(n==="sg"?"Sing.":"Plur.")+'</th>';
+      h+='<th class="case">'+CL[c]+'</th>';
+      GENS.forEach(function(g){
+        var cell=p[n][c][g];
+        h+='<td class="end col-'+p.col+'" tabindex="0"><span class="endv lat">'+cell.e+'</span>'+
+           (cell.note?'<span class="alt">'+cell.note+'</span>':'')+'</td>';
+      });
+      h+='</tr>';
+    });
+  });
+  return h+'</tbody></table></div>';
+}
+$("#a-chart-host").innerHTML=
+  aChart("a12","1st/2nd Declension")+aChart("a3","3rd Declension")+aChart("acmp","Comparative");
+$("#a-hide").addEventListener("change",function(e){
+  $$("#a-chart-host .tablewrap").forEach(function(t){t.classList.toggle("hide-ends",e.target.checked);});
+});
+
+/* quick-fire: pattern or degree */
+var APAT={"12":"1st/2nd declension","3x3":"3rd · three endings","3x2":"3rd · two endings","3x1":"3rd · one ending"};
+var AQ=[
+ {t:"pat",e:"bonus, bona, bonum",g:"good",a:"12",w:"-us, -a, -um: masculine like servus, feminine like puella, neuter like bellum."},
+ {t:"pat",e:"magnus, magna, magnum",g:"big, great",a:"12",w:"-us, -a, -um → 1st/2nd."},
+ {t:"pat",e:"laetus, laeta, laetum",g:"happy",a:"12",w:"-us, -a, -um → 1st/2nd."},
+ {t:"pat",e:"miser, misera, miserum",g:"wretched",a:"12",w:"An -er adjective on the 1st/2nd pattern. It keeps its e: miserī, miserae."},
+ {t:"pat",e:"pulcher, pulchra, pulchrum",g:"beautiful",a:"12",w:"1st/2nd, and the e drops out: pulchrī, pulchrae, like ager, agrī."},
+ {t:"pat",e:"līber, lībera, līberum",g:"free",a:"12",w:"1st/2nd -er type that keeps its e, like puer."},
+ {t:"pat",e:"ācer, ācris, ācre",g:"sharp, fierce",a:"3x3",w:"Three nominatives, but the feminine is -is, not -a, so it is 3rd. Stem ācr-."},
+ {t:"pat",e:"celer, celeris, celere",g:"swift",a:"3x3",w:"Three nominatives with a feminine in -is → 3rd. Celer keeps its e: stem celer-."},
+ {t:"pat",e:"omnis, omne",g:"every, all",a:"3x2",w:"Two forms: -is for masculine and feminine, -e for neuter."},
+ {t:"pat",e:"fortis, forte",g:"brave, strong",a:"3x2",w:"Two forms: -is (m./f.), -e (n.)."},
+ {t:"pat",e:"trīstis, trīste",g:"sad",a:"3x2",w:"Two forms: -is (m./f.), -e (n.)."},
+ {t:"pat",e:"facilis, facile",g:"easy",a:"3x2",w:"Two forms: -is (m./f.), -e (n.)."},
+ {t:"pat",e:"fēlīx, fēlīcis",g:"lucky, happy",a:"3x1",w:"One nominative for every gender. The second form is the genitive, which gives the stem fēlīc-."},
+ {t:"pat",e:"ingēns, ingentis",g:"huge",a:"3x1",w:"One-ending adjective: the genitive ingentis gives the stem ingent-."},
+ {t:"pat",e:"audāx, audācis",g:"bold",a:"3x1",w:"One nominative, then the genitive: stem audāc-."},
+ {t:"pat",e:"sapiēns, sapientis",g:"wise",a:"3x1",w:"One nominative, then the genitive: stem sapient-."},
+ {t:"deg",e:"longiōrem",g:"from longus",a:"comp",w:"-iōr- in the middle is the comparative stem: longior, longiōris."},
+ {t:"deg",e:"fortissimīs",g:"from fortis",a:"sup",w:"-issim- marks the superlative."},
+ {t:"deg",e:"pulcherrima",g:"from pulcher",a:"sup",w:"-er adjectives take -rimus: pulcher → pulcherrimus."},
+ {t:"deg",e:"facillimum",g:"from facilis",a:"sup",w:"facilis is one of the six -lis adjectives that take -limus."},
+ {t:"deg",e:"melior",g:"from bonus",a:"comp",w:"Irregular comparative of bonus."},
+ {t:"deg",e:"optimī",g:"from bonus",a:"sup",w:"Irregular superlative of bonus."},
+ {t:"deg",e:"maiōra",g:"from magnus",a:"comp",w:"Comparative of magnus, neuter plural."},
+ {t:"deg",e:"maximō",g:"from magnus",a:"sup",w:"Irregular superlative of magnus."},
+ {t:"deg",e:"pessimus",g:"from malus",a:"sup",w:"Irregular superlative of malus."},
+ {t:"deg",e:"minōribus",g:"from parvus",a:"comp",w:"Irregular comparative of parvus: minor, minōris."},
+ {t:"deg",e:"clārius",g:"from clārus",a:"comp",w:"Neuter comparative in -ius. Don't mistake it for a 2nd-declension -us."},
+ {t:"deg",e:"laetīs",g:"from laetus",a:"pos",w:"No -ior- and no -issim-: plain positive, dative/ablative plural."},
+ {t:"deg",e:"ācria",g:"from ācer",a:"pos",w:"Positive, 3rd-declension neuter plural (-ia)."},
+ {t:"deg",e:"fēlīcēs",g:"from fēlīx",a:"pos",w:"Positive, 3rd-declension plural (-ēs)."},
+ {t:"deg",e:"benignissimī",g:"Chapter 13: semper benignissimī estis",a:"sup",w:"-issim-: superlative. “You are always most kind.”"},
+ {t:"deg",e:"calidissimī",g:"Chapter 13: āctōrēs, fessī et calidissimī",a:"sup",w:"-issim-: superlative. “very hot”."}
+];
+var aqCur=null,aqR=0,aqT=0;
+function aqNew(){
+  aqCur=pick(AQ.filter(function(x){return x!==aqCur}));
+  var opts=aqCur.t==="pat"?APAT:ADEG;
+  $("#aq-q").textContent=aqCur.t==="pat"?"Which pattern does this adjective follow?":"Which degree is this form?";
+  $("#aq-entry").textContent=aqCur.e; $("#aq-gloss").textContent=aqCur.g;
+  $("#aq-verdict").classList.add("hidden");
+  $("#aq-opts").innerHTML=Object.keys(opts).map(function(k){
+    return '<button class="opt" data-a="'+k+'">'+opts[k]+'</button>';
+  }).join("");
+}
+$("#aq-opts").addEventListener("click",function(e){
+  var b=e.target.closest(".opt"); if(!b||b.disabled)return;
+  var ok=(b.dataset.a===aqCur.a), opts=aqCur.t==="pat"?APAT:ADEG;
+  $$("#aq-opts .opt").forEach(function(o){
+    o.disabled=true;
+    if(o.dataset.a===aqCur.a)o.classList.add("is-ok");
+    else if(o===b)o.classList.add("is-bad");
+  });
+  aqT++; if(ok)aqR++;
+  $("#aq-tally").textContent=aqR+" / "+aqT;
+  aTick(ok,null);
+  var v=$("#aq-verdict");
+  v.className="verdict "+(ok?"ok":"bad");
+  v.innerHTML='<span class="mark">'+(ok?"✓":"✗")+'</span><div><b>'+opts[aqCur.a]+
+    '</b><span class="note">'+esc(aqCur.w)+'</span></div>';
+  v.classList.remove("hidden");
+});
+$("#aq-next").addEventListener("click",aqNew);
+
+/* ending drill */
+var adCur=null,adDone=false,adDots=[];
+function adNew(){
+  var on=$$("#ad-filters input[data-p]").filter(function(i){return i.checked}).map(function(i){return i.dataset.p});
+  if(!on.length)on=AKEYS;
+  var pool=[];
+  on.forEach(function(k){["sg","pl"].forEach(function(n){CASES.forEach(function(c){GENS.forEach(function(g){
+    pool.push({k:k,n:n,c:c,g:g});
+  });});});});
+  var q=pick(pool),guard=0;
+  while(adCur&&q.k===adCur.k&&q.n===adCur.n&&q.c===adCur.c&&q.g===adCur.g&&guard++<12)q=pick(pool);
+  adCur=q; adDone=false;
+  var p=A[q.k];
+  $("#ad-tag").innerHTML='<span class="chip '+p.col+'">'+p.short+' · '+esc(p.model)+'</span>';
+  $("#ad-ask").textContent=CFULL[q.c]+" "+NUMF[q.n].toLowerCase();
+  $("#ad-sub").textContent=GFULL[q.g]+" · type the ending, the hyphen is optional";
+  $("#ad-verdict").classList.add("hidden");
+  var i=$("#ad-input"); i.value=""; i.disabled=false; if(i.offsetParent)i.focus();
+  $("#ad-submit").textContent="Check";
+}
+function adShow(ok,tried){
+  var cell=A[adCur.k][adCur.n][adCur.c][adCur.g];
+  var full=cell.e+(cell.note?" "+cell.note:"");
+  var note="";
+  if(!ok&&tried)note="The answer is "+full+".";
+  else if(ok&&cell.note)note="Also valid here: "+cell.note.replace(/[()\/]/g," ").trim()+".";
+  var v=$("#ad-verdict");
+  v.className="verdict "+(ok?"ok":"bad");
+  v.innerHTML='<span class="mark">'+(ok?"✓":"✗")+'</span><div><b class="lat">'+full+'</b>'+
+    (note?'<span class="note">'+esc(note)+'</span>':'')+'</div>';
+  v.classList.remove("hidden");
+  $("#ad-input").disabled=true; $("#ad-submit").textContent="Next";
+  adDots.push(ok); if(adDots.length>20)adDots.shift();
+  $("#ad-dots").innerHTML=adDots.map(function(d){return '<i class="'+(d?"hit":"miss")+'"></i>'}).join("");
+}
+function adKey(){return [adCur.k,adCur.n,adCur.c,adCur.g].join("|")}
+$("#ad-form").addEventListener("submit",function(e){
+  e.preventDefault();
+  if(adDone){adNew();return;}
+  var val=$("#ad-input").value; if(!val.trim())return;
+  var ok=aAccepts(A[adCur.k][adCur.n][adCur.c][adCur.g],val,aStrict());
+  adDone=true;
+  aTick(ok,ok?null:adKey());
+  adShow(ok,true);
+});
+$("#ad-skip").addEventListener("click",function(){
+  if(adDone){adNew();return;}
+  adDone=true;
+  aTick(false,adKey());
+  adShow(false,false);
+});
+$("#ad-filters").addEventListener("change",function(e){ if(e.target.dataset.p)adNew(); });
+
+/* decline an adjective */
+var ADJS=[
+ {entry:"longus, longa, longum",gloss:"long",cls:"a12",deg:"pos",stem:"long",nom:["longus","longa","longum"]},
+ {entry:"bonus, bona, bonum",gloss:"good",cls:"a12",deg:"pos",stem:"bon",nom:["bonus","bona","bonum"]},
+ {entry:"magnus, magna, magnum",gloss:"big, great",cls:"a12",deg:"pos",stem:"magn",nom:["magnus","magna","magnum"]},
+ {entry:"laetus, laeta, laetum",gloss:"happy",cls:"a12",deg:"pos",stem:"laet",nom:["laetus","laeta","laetum"]},
+ {entry:"miser, misera, miserum",gloss:"wretched",cls:"a12",deg:"pos",stem:"miser",nom:["miser","misera","miserum"]},
+ {entry:"pulcher, pulchra, pulchrum",gloss:"beautiful",cls:"a12",deg:"pos",stem:"pulchr",nom:["pulcher","pulchra","pulchrum"]},
+ {entry:"omnis, omne",gloss:"every, all",cls:"a3",deg:"pos",stem:"omn",nom:["omnis","omnis","omne"]},
+ {entry:"fortis, forte",gloss:"brave, strong",cls:"a3",deg:"pos",stem:"fort",nom:["fortis","fortis","forte"]},
+ {entry:"facilis, facile",gloss:"easy",cls:"a3",deg:"pos",stem:"facil",nom:["facilis","facilis","facile"]},
+ {entry:"ācer, ācris, ācre",gloss:"sharp, fierce",cls:"a3",deg:"pos",stem:"ācr",nom:["ācer","ācris","ācre"]},
+ {entry:"fēlīx, fēlīcis",gloss:"lucky, happy",cls:"a3",deg:"pos",stem:"fēlīc",nom:["fēlīx","fēlīx","fēlīx"]},
+ {entry:"ingēns, ingentis",gloss:"huge",cls:"a3",deg:"pos",stem:"ingent",nom:["ingēns","ingēns","ingēns"]},
+ {entry:"longior, longius",gloss:"longer",cls:"acmp",deg:"comp",stem:"long",nom:["longior","longior","longius"]},
+ {entry:"fortior, fortius",gloss:"braver",cls:"acmp",deg:"comp",stem:"fort",nom:["fortior","fortior","fortius"]},
+ {entry:"melior, melius",gloss:"better",cls:"acmp",deg:"comp",stem:"mel",nom:["melior","melior","melius"]},
+ {entry:"maior, maius",gloss:"bigger, greater",cls:"acmp",deg:"comp",stem:"ma",nom:["maior","maior","maius"]},
+ {entry:"longissimus, longissima, longissimum",gloss:"longest, very long",cls:"a12",deg:"sup",stem:"longissim",nom:["longissimus","longissima","longissimum"]},
+ {entry:"optimus, optima, optimum",gloss:"best",cls:"a12",deg:"sup",stem:"optim",nom:["optimus","optima","optimum"]},
+ {entry:"pulcherrimus, pulcherrima, pulcherrimum",gloss:"most beautiful",cls:"a12",deg:"sup",stem:"pulcherrim",nom:["pulcherrimus","pulcherrima","pulcherrimum"]},
+ {entry:"facillimus, facillima, facillimum",gloss:"easiest, very easy",cls:"a12",deg:"sup",stem:"facillim",nom:["facillimus","facillima","facillimum"]}
+];
+function aForm(it,n,c,g){
+  var gi=GENS.indexOf(g);
+  if(n==="sg"){
+    if(c==="nom")return it.nom[gi];
+    if(c==="voc"){
+      if(it.cls==="a12"&&g==="m")return /us$/.test(it.nom[0])?it.stem+"e":it.nom[0];
+      return it.nom[gi];
+    }
+    if(c==="acc"&&g==="n")return it.nom[2];
+  }
+  return it.stem+A[it.cls][n][c][g].e.replace(/^-/,"");
+}
+function aForms(it,n,c,g){
+  var f=[aForm(it,n,c,g)];
+  if(it.cls==="a3"&&n==="pl"&&c==="acc"&&g!=="n")f.push(it.stem+"īs");
+  return f;
+}
+var acCur=null;
+function acRender(){
+  var it=acCur, p=A[it.cls];
+  $("#ac-entry").textContent=it.entry;
+  $("#ac-meta").innerHTML='<span class="chip '+p.col+'">'+p.short+'</span> &nbsp;'+ADEG[it.deg]+
+    ' &nbsp;·&nbsp; '+esc(it.gloss)+' &nbsp;·&nbsp; stem <b class="lat">'+it.stem+'-</b>';
+  $("#ac-score").textContent="";
+  var h='<thead><tr><th class="numlab"></th><th class="case"></th>'+
+    GENS.map(function(g){return '<th class="case" style="width:auto">'+GL[g]+'</th>'}).join("")+'</tr></thead><tbody>';
+  ["sg","pl"].forEach(function(n){
+    CASES.forEach(function(c,ci){
+      h+='<tr'+(ci===0?' class="numstart"':'')+'>';
+      if(ci===0)h+='<th class="numlab" rowspan="6">'+(n==="sg"?"Sing.":"Plur.")+'</th>';
+      h+='<th class="case">'+CL[c]+'</th>';
+      GENS.forEach(function(g,gi){
+        h+='<td>';
+        if(n==="sg"&&c==="nom")h+='<input type="text" class="given" value="'+it.nom[gi]+'" readonly aria-label="given form">';
+        else h+='<input type="text" data-n="'+n+'" data-c="'+c+'" data-g="'+g+'" spellcheck="false" aria-label="'+
+          CFULL[c]+' '+NUMF[n]+' '+GFULL[g]+'">';
+        h+='<span class="solution" data-sol="'+n+c+g+'"></span></td>';
+      });
+      h+='</tr>';
+    });
+  });
+  $("#ac-grid").innerHTML=h+'</tbody>';
+}
+function acNew(){
+  var on=$$("#ac-filters input[data-g]").filter(function(i){return i.checked}).map(function(i){return i.dataset.g});
+  if(!on.length)on=["pos","comp","sup"];
+  var pool=ADJS.filter(function(x){return on.indexOf(x.deg)>=0&&x!==acCur});
+  if(!pool.length)pool=ADJS;
+  acCur=pick(pool); acRender();
+}
+$("#ac-new").addEventListener("click",acNew);
+$("#ac-filters").addEventListener("change",acNew);
+$("#ac-check").addEventListener("click",function(){
+  var strict=aStrict(), right=0, asked=0;
+  $$("#ac-grid input[data-n]").forEach(function(inp){
+    var n=inp.dataset.n, c=inp.dataset.c, g=inp.dataset.g, forms=aForms(acCur,n,c,g);
+    var ok=forms.some(function(f){return norm(f,strict)===norm(inp.value,strict)}) && !!inp.value.trim();
+    inp.classList.toggle("ok",ok); inp.classList.toggle("bad",!ok);
+    var sol=$('[data-sol="'+n+c+g+'"]');
+    sol.textContent = ok ? "✓" : forms.join(" / ");
+    sol.style.color = ok ? "var(--ok)" : "var(--bad)";
+    asked++;
+    if(ok)right++; else S.amisses[[acCur.cls,n,c,g].join("|")]=(S.amisses[[acCur.cls,n,c,g].join("|")]||0)+1;
+  });
+  S.total+=asked; S.right+=right;
+  S.streak = (right===asked && asked>0) ? S.streak+1 : 0;
+  if(S.streak>S.best)S.best=S.streak;
+  paint(); save(); aRenderMisses();
+  $("#ac-score").textContent=right+" of "+asked+" correct";
+  $("#ac-score").style.color = (right===asked&&asked>0) ? "var(--ok)" : "var(--ink-2)";
+});
+
+/* degrees */
+var DRULE={
+  reg:"Regular: genitive stem + -ior / -issimus.",
+  er:"-er adjective: comparative on the stem (-ior), superlative is the nominative + -rimus.",
+  lis:"One of the six -lis adjectives: superlative in -limus.",
+  irr:"Irregular. This one has to be memorised."
+};
+var DEG=[
+ {e:"longus, longa, longum",gl:"long",c:"longior",s:"longissimus",r:"reg"},
+ {e:"altus, alta, altum",gl:"high, deep",c:"altior",s:"altissimus",r:"reg"},
+ {e:"laetus, laeta, laetum",gl:"happy",c:"laetior",s:"laetissimus",r:"reg"},
+ {e:"clārus, clāra, clārum",gl:"famous, bright",c:"clārior",s:"clārissimus",r:"reg"},
+ {e:"fortis, forte",gl:"brave",c:"fortior",s:"fortissimus",r:"reg"},
+ {e:"fēlīx, fēlīcis",gl:"lucky",c:"fēlīcior",s:"fēlīcissimus",r:"reg",w:"Build on the genitive stem fēlīc-, not the nominative."},
+ {e:"ingēns, ingentis",gl:"huge",c:"ingentior",s:"ingentissimus",r:"reg",w:"Genitive stem ingent-."},
+ {e:"pulcher, pulchra, pulchrum",gl:"beautiful",c:"pulchrior",s:"pulcherrimus",r:"er"},
+ {e:"miser, misera, miserum",gl:"wretched",c:"miserior",s:"miserrimus",r:"er"},
+ {e:"ācer, ācris, ācre",gl:"sharp, fierce",c:"ācrior",s:"ācerrimus",r:"er"},
+ {e:"celer, celeris, celere",gl:"swift",c:"celerior",s:"celerrimus",r:"er"},
+ {e:"facilis, facile",gl:"easy",c:"facilior",s:"facillimus",r:"lis"},
+ {e:"difficilis, difficile",gl:"difficult",c:"difficilior",s:"difficillimus",r:"lis"},
+ {e:"similis, simile",gl:"similar",c:"similior",s:"simillimus",r:"lis"},
+ {e:"bonus, bona, bonum",gl:"good",c:"melior",s:"optimus",r:"irr"},
+ {e:"malus, mala, malum",gl:"bad",c:"peior",s:"pessimus",r:"irr"},
+ {e:"magnus, magna, magnum",gl:"big, great",c:"maior",s:"maximus",r:"irr"},
+ {e:"parvus, parva, parvum",gl:"small",c:"minor",s:"minimus",r:"irr"},
+ {e:"multus, multa, multum",gl:"much, many",c:"plūs",s:"plūrimus",r:"irr",cs:"neuter",
+  w:"In the singular plūs is a neuter noun: plūs aurī, more gold."}
+];
+var agCur=null,agAsk="c",agDone=false;
+function agNew(){
+  var on=$$("#ag-filters input[data-r]").filter(function(i){return i.checked}).map(function(i){return i.dataset.r});
+  if(!on.length)on=["reg","er","lis","irr"];
+  var pool=DEG.filter(function(x){return on.indexOf(x.r)>=0&&x!==agCur});
+  if(!pool.length)pool=DEG;
+  agCur=pick(pool); agAsk=Math.random()<.5?"c":"s"; agDone=false;
+  var isC=agAsk==="c";
+  $("#ag-tag").innerHTML='<span class="chip '+(isC?"c1":"c2")+'">'+(isC?"Comparative":"Superlative")+'</span>';
+  $("#ag-ask").textContent=agCur.e;
+  $("#ag-gloss").textContent=agCur.gl;
+  $("#ag-sub").textContent="Give the "+(isC?"comparative":"superlative")+", "+
+    ((isC&&agCur.cs)?agCur.cs:"masculine")+" nominative singular";
+  $("#ag-verdict").classList.add("hidden");
+  var i=$("#ag-input"); i.value=""; i.disabled=false; i.placeholder=isC?"-ior":"-issimus";
+  if(i.offsetParent)i.focus();
+  $("#ag-submit").textContent="Check";
+}
+function agShow(ok){
+  var pos=agCur.e.split(",")[0];
+  var v=$("#ag-verdict");
+  v.className="verdict "+(ok?"ok":"bad");
+  v.innerHTML='<span class="mark">'+(ok?"✓":"✗")+'</span><div><b class="lat">'+pos+' → '+agCur.c+' → '+agCur.s+
+    '</b><span class="note">'+esc(DRULE[agCur.r]+(agCur.w?" "+agCur.w:""))+'</span></div>';
+  v.classList.remove("hidden");
+  $("#ag-input").disabled=true; $("#ag-submit").textContent="Next";
+}
+$("#ag-form").addEventListener("submit",function(e){
+  e.preventDefault();
+  if(agDone){agNew();return;}
+  var val=$("#ag-input").value; if(!val.trim())return;
+  var want=agAsk==="c"?agCur.c:agCur.s;
+  var ok=norm(val,aStrict())===norm(want,aStrict());
+  agDone=true; aTick(ok,null); agShow(ok);
+});
+$("#ag-skip").addEventListener("click",function(){
+  if(agDone){agNew();return;}
+  agDone=true; aTick(false,null); agShow(false);
+});
+$("#ag-filters").addEventListener("change",agNew);
+
+/* decoder */
+var AAMB={};
+AKEYS.forEach(function(k){["sg","pl"].forEach(function(n){CASES.forEach(function(c){GENS.forEach(function(g){
+  var cell=A[k][n][c][g];
+  [cell.e].concat(cell.alt||[]).forEach(function(raw){
+    if(raw.charAt(0)!=="-")return;
+    var m=AAMB[raw]=AAMB[raw]||{}, key=k+"|"+n+"|"+c;
+    (m[key]=m[key]||[]).push(g);
+  });
+});});});});
+var AORD=["-us","-er","-a","-ā","-ae","-am","-ārum","-ās","-um","-ī","-īs","-ō","-ōrum","-ōs",
+  "-e","-em","-is","-ēs","-ia","-ium","-ibus",
+  "-ior","-ius","-iōris","-iōrī","-iōrem","-iōre","-iōrēs","-iōra","-iōrum","-iōribus"].filter(function(k){return AAMB[k]});
+var aeCur="-ī", aeShown=false;
+function aeRender(){
+  $("#ae-buttons").innerHTML=AORD.map(function(k){
+    return '<button class="endbtn lat" data-e="'+k+'" aria-pressed="'+(k===aeCur)+'">'+k+'</button>';
+  }).join("");
+  var groups=AAMB[aeCur]||{}, keys=Object.keys(groups);
+  $("#ae-big").textContent=aeCur;
+  $("#ae-count").textContent = keys.length===1
+    ? "One job only. Within these adjective patterns this ending is unambiguous."
+    : keys.length+" different jobs across the adjective patterns. Name them all, then reveal.";
+  $("#ae-list").innerHTML = aeShown ? keys.map(function(key){
+    var p=key.split("|"), d=A[p[0]];
+    return '<div class="parse"><span class="chip '+d.col+'">'+d.short+'</span>'+
+      '<span class="what">'+CFULL[p[2]]+' <em>'+NUMF[p[1]].toLowerCase()+' · '+
+      groups[key].map(function(g){return GL[g]}).join(" ")+'</em></span></div>';
+  }).join("") : "";
+  $("#ae-reveal").textContent = aeShown ? "Hide" : "Reveal";
+}
+$("#ae-buttons").addEventListener("click",function(e){
+  var b=e.target.closest(".endbtn"); if(!b)return;
+  aeCur=b.dataset.e; aeShown=false; aeRender();
+});
+$("#ae-reveal").addEventListener("click",function(){ aeShown=!aeShown; aeRender(); });
+
 /* ---------- init ---------- */
 drNew(); decRender(); ntNew(); renderMisses(); paint();
+aqNew(); adNew(); acNew(); agNew(); aeRender(); aRenderMisses();
 
 function boot(st){
   if(st&&st.view){
